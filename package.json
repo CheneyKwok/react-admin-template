@@ -9,11 +9,12 @@
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
         "format": "prettier --write \"./**/*.{html,vue,js,ts,jsx,tsx,json,css,scss,sass,less,md}\"",
-        "lint:eslint": "eslint src/**/*.{js,ts,jsx,tsx,vue} --cache --fix",
+        "lint:eslint": "eslint src/**/*.{js,ts,jsx,tsx,vue} --fix",
         "lint:style": "stylelint src/**/*.{html,vue,css,scss,sass,less,js,ts,jsx,tsx} --fix",
         "prepare": "husky install",
         "commitlint": "commitlint --config commitlint.config.cjs -e -V",
-        "preinstall": "npx -y only-allow pnpm"
+        "preinstall": "npx -y only-allow pnpm",
+        "precommit": "lint-staged"
     },
     "dependencies": {
         "antd": "^5.9.2",
@@ -38,6 +39,7 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.3",
         "husky": "^8.0.0",
+        "lint-staged": "^14.0.1",
         "postcss": "^8.4.30",
         "postcss-html": "^1.5.0",
         "postcss-scss": "^4.0.8",
