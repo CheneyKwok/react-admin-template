@@ -1,35 +1,34 @@
-## 环境代码校验插件
+# React + TypeScript + Vite + Eslint + Stylelint + Prettier + Commitlint
+## eslint 插件
 
 ```
-# 让所有与prettier规则存在冲突的Eslint rules失效，并使用prettier进行代码检查
-# 运行更漂亮的Eslint，使prettier规则优先级更高，Eslint优先级低
+# 让所有与 prettier 规则存在冲突的 Eslint rules 失效，并使用 prettier 进行代码检查
+# 运行更漂亮的 Eslint，使 prettier 规则优先级更高，Eslint 优先级低
 "eslint-plugin-prettier"
 "eslint-config-prettier"
 "eslint-plugin-import"
 "eslint-plugin-node"
-# react.js的Eslint插件
+# React 的 Eslint 插件
 "eslint-plugin-react"
-# 该解析器允许使用Eslint校验所有babel code
+# 该解析器允许使用 Eslint 校验所有 babel code
 "@babel/eslint-parser"
 ```
 
 ### 安装指令
 
 ```npm
-pnpm install -D eslint-config-prettier eslint-plugin-prettier eslint-plugin-import eslint-plugin-node eslint-plugin-react  @babel/eslint-parser
+pnpm i -D eslint-config-prettier eslint-plugin-prettier eslint-plugin-import eslint-plugin-node eslint-plugin-react  @babel/eslint-parser
 ```
 
-## 配置stylelint
+## stylelint 插件
 
-### 使用scss作为预处理器，安装以下依赖
+使用 scss 作为预处理器，安装以下依赖
 
 ```npm
-pnpm add sass sass-loader stylelint postcss postcss-scss postcss-html stylelint-config-recess-order stylelint-config-recommended-scss stylelint-config-standard stylelint-scss stylelint-order stylelint-config-standard-scss -D
+pnpm i -D sass sass-loader stylelint postcss postcss-scss postcss-html stylelint-config-recess-order stylelint-config-recommended-scss stylelint-config-standard stylelint-scss stylelint-order stylelint-config-standard-scss
 ```
 
-## 配置 commitlint
-
-### 规则
+## commitlint 规则
 
 ```markdown
 'feat',//新特性、新功能
