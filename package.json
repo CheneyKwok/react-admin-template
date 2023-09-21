@@ -8,13 +8,13 @@
         "build": "tsc && vite build --mode .env.production",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "format": "prettier --write \"./**/*.{html,vue,js,ts,jsx,tsx,json,css,scss,sass,less,md}\"",
+        "format": "prettier --write src/**/*.{html,vue,js,ts,jsx,tsx,json,css,scss,sass,less,md}",
         "lint:eslint": "eslint src/**/*.{js,ts,jsx,tsx,vue} --fix",
         "lint:style": "stylelint src/**/*.{html,vue,css,scss,sass,less,js,ts,jsx,tsx} --fix",
         "prepare": "husky install",
         "commitlint": "commitlint --config commitlint.config.cjs -e -V",
         "preinstall": "npx -y only-allow pnpm",
-        "precommit": "lint-staged"
+        "lint-staged": "lint-staged"
     },
     "dependencies": {
         "antd": "^5.9.2",

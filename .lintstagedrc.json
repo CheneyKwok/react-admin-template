@@ -1,4 +1,4 @@
 {
-    "*.{js,ts,vue,jsx,tsx}": ["prettier --write"],
+    "*.{js,ts,vue,jsx,tsx}": ["eslint --fix", "prettier --write"],
     "*.{html,vue,jsx,tsx,css,scss,sass,less}": ["stylelint --fix"]
 }
