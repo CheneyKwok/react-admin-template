@@ -1,6 +1,8 @@
 # React + TypeScript + Vite + Eslint + Stylelint + Prettier + Commitlint
 
-## eslint 插件
+## 插件
+
+### eslint 插件
 
 ```
 # 让所有与 prettier 规则存在冲突的 Eslint rules 失效，并使用 prettier 进行代码检查
@@ -15,13 +17,13 @@
 "@babel/eslint-parser"
 ```
 
-### 安装指令
+#### 安装指令
 
 ```npm
 pnpm i -D eslint-config-prettier eslint-plugin-prettier eslint-plugin-import eslint-plugin-node eslint-plugin-react  @babel/eslint-parser
 ```
 
-## stylelint 插件
+### stylelint 插件
 
 使用 scss 作为预处理器，安装以下依赖
 
@@ -29,7 +31,7 @@ pnpm i -D eslint-config-prettier eslint-plugin-prettier eslint-plugin-import esl
 pnpm i -D sass sass-loader stylelint postcss postcss-scss postcss-html stylelint-config-recess-order stylelint-config-recommended-scss stylelint-config-standard stylelint-scss stylelint-order stylelint-config-standard-scss
 ```
 
-## commitlint 规则
+### commitlint 规则
 
 ```markdown
 'feat',//新特性、新功能
@@ -42,4 +44,12 @@ pnpm i -D sass sass-loader stylelint postcss postcss-scss postcss-html stylelint
 'chore',//其他修改, 比如改变构建流程、或者增加依赖库、工具等
 'revert',//回滚到上一个版本
 'build',//编译相关的修改，例如发布版本、对项目构建或者依赖的改动\*\*\*\*
+```
+
+### svg 插件
+
+#### 安装
+
+```npm
+pnpm i vite-plugin-svg-icons -D
 ```

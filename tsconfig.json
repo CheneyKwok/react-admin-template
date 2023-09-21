@@ -24,7 +24,9 @@
         "paths": {
             //路径映射，相对于baseUrl
             "@/*": ["src/*"]
-        }
+        },
+
+        "types": ["vite-plugin-svg-icons/client"]
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]

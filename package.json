@@ -54,6 +54,7 @@
         "stylelint-order": "^6.0.3",
         "stylelint-scss": "^5.2.1",
         "typescript": "^5.0.2",
-        "vite": "^4.4.5"
+        "vite": "^4.4.5",
+        "vite-plugin-svg-icons": "^2.0.1"
     }
 }
