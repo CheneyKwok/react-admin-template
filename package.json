@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite --open",
-        "build": "tsc && vite build",
+        "build": "tsc && vite build --mode .env.production",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
         "format": "prettier --write \"./**/*.{html,vue,js,ts,jsx,tsx,json,css,scss,sass,less,md}\"",
