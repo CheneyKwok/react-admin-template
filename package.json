@@ -10,7 +10,7 @@
         "preview": "vite preview",
         "format": "prettier --write \"./**/*.{html,vue,js,ts,jsx,tsx,json,css,scss,sass,less,md}\"",
         "lint:eslint": "eslint src/**/*.{js,ts,jsx,tsx,vue} --cache --fix",
-        "lint:style": "stylelint src/**/*.{html,vue,css,scss,sass,less,js,ts,jsx,tsx} --cache --fix",
+        "lint:style": "stylelint src/**/*.{html,vue,css,scss,sass,less,js,ts,jsx,tsx} --fix",
         "prepare": "husky install",
         "commitlint": "commitlint --config commitlint.config.cjs -e -V",
         "preinstall": "npx -y only-allow pnpm"
