@@ -1,5 +1,6 @@
 function App() {
-    console.log(import.meta.env)
+    var a = 'xxx'
+
     return <>App</>
 }
 
