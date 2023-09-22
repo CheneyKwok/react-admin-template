@@ -6,8 +6,9 @@ interface SvgProps {
     color?: string
     width?: string
     height?: string
-    props?: object
+    [propName: string]: string | undefined
 }
+
 const SvgIcon = ({
     name,
     prefix = 'icon',

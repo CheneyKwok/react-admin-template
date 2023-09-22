@@ -1,6 +1,7 @@
 import SvgIcon from '@/components/SvgIcon.tsx'
+import React from 'react'
 
-function App() {
+const App: React.FC = () => {
     return (
         <>
             <h1>svg 测试</h1>
