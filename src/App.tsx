@@ -8,9 +8,12 @@ const App: React.FC = () => {
             <SvgIcon
                 name='phone'
                 color='red'
-                width='20px'
-                height='30px'
-                background-color='yellow'
+                style={{
+                    width: '20px',
+                    height: '30px',
+                    fontSize: '50px',
+                    backgroundColor: 'yellow',
+                }}
             />
         </>
     )
