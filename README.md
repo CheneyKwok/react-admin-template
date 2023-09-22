@@ -53,3 +53,13 @@ pnpm i -D sass sass-loader stylelint postcss postcss-scss postcss-html stylelint
 ```npm
 pnpm i vite-plugin-svg-icons -D
 ```
+
+### mock 插件
+
+使用 vite-plugin-mock
+
+#### 安装
+
+```npm
+pnpm install -D vite-plugin-mock mockjs
+```
