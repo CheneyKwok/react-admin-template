@@ -34,16 +34,17 @@ pnpm i -D sass sass-loader stylelint postcss postcss-scss postcss-html stylelint
 ### commitlint 规则
 
 ```markdown
-'feat',//新特性、新功能
-'fix',//修改bug
-'docs',//文档修改
-'style',//代码格式修改, 注意不是 css 修改
-'refactor',//代码重构
-'perf',//优化相关，比如提升性能、体验
-'test',//测试用例修改
-'chore',//其他修改, 比如改变构建流程、或者增加依赖库、工具等
-'revert',//回滚到上一个版本
-'build',//编译相关的修改，例如发布版本、对项目构建或者依赖的改动\*\*\*\*
+build: 影响构建系统或外部依赖项的更改
+feat: 添加功能 引入新的特性
+fix: bug 修复
+docs: 文档修改
+style: 格式调整 不会影响代码含义的更改（空格，格式缺少分号等）
+refactor: 代码重构 即不是修复 Bug，也不是添加功能的代码更改
+perf: 性能优化 更改代码以提高性能
+chore: 杂务处理 其他不会修改源文件或者测试文件的更改
+evert: 恢复版本 恢复到上一个版本
+ci: 脚本变更 对 CI 配置文件和脚本的更改
+test: 测试用例修改
 ```
 
 ### svg 插件
