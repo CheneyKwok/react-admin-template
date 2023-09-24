@@ -1,13 +1,11 @@
 import React from 'react'
+import { useRoutes } from 'react-router-dom'
 
-import Home from '@/views/home'
+import rootRoutes from '@/router'
 
 const App: React.FC = () => {
-  return (
-    <>
-      <Home></Home>
-    </>
-  )
+  const element = useRoutes(rootRoutes as any)
+  return <>{element}</>
 }
 
 export default App
