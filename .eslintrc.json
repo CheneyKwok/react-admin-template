@@ -9,7 +9,6 @@
     "browser": true
   },
   "extends": [
-    "plugin:@typescript-eslint/recommended-type-checked",
     "airbnb-typescript",
     "prettier",
     "plugin:react/recommended",
@@ -63,11 +62,6 @@
     "import/no-unresolved": "off",
     "no-console": "off",
     "import/extensions": "off",
-    "no-nested-ternary": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-unsafe-assignment": "off",
-    "@typescript-eslint/no-unsafe-return": "off",
-    "@typescript-eslint/no-unsafe-member-access": "off",
-    "@typescript-eslint/no-floating-promises": "off"
+    "no-nested-ternary": "off"
   }
 }
