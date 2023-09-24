@@ -34,17 +34,7 @@ pnpm i -D sass sass-loader stylelint postcss postcss-scss postcss-html stylelint
 ### commitlint 规则
 
 ```markdown
-build: 影响构建系统或外部依赖项的更改
-feat: 添加功能 引入新的特性
-fix: bug 修复
-docs: 文档修改
-style: 格式调整 不会影响代码含义的更改（空格，格式缺少分号等）
-refactor: 代码重构 即不是修复 Bug，也不是添加功能的代码更改
-perf: 性能优化 更改代码以提高性能
-chore: 杂务处理 其他不会修改源文件或者测试文件的更改
-evert: 恢复版本 恢复到上一个版本
-ci: 脚本变更 对 CI 配置文件和脚本的更改
-test: 测试用例修改
+build: 影响构建系统或外部依赖项的更改 feat: 添加功能 引入新的特性 fix: bug 修复 docs: 文档修改 style: 格式调整 不会影响代码含义的更改（空格，格式缺少分号等）refactor: 代码重构 即不是修复 Bug，也不是添加功能的代码更改 perf: 性能优化 更改代码以提高性能 chore: 杂务处理 其他不会修改源文件或者测试文件的更改 revert: 恢复版本 恢复到上一个版本 ci: 脚本变更 对 CI 配置文件和脚本的更改 test: 测试用例修改
 ```
 
 ### svg 插件
