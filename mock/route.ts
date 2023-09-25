@@ -44,8 +44,8 @@ const createRoutes = () => [
 
 export default [
   {
-    url: '/api/user/menu', // 请求地址
-    method: 'get', // 请求方式
+    url: '/api/user/menu',
+    method: 'get',
     response: () => {
       const routes = createRoutes()
       return { code: 200, data: { routes } }

@@ -11,7 +11,7 @@ export const flattenRoutes = (routes: RouteType[]): RouteType[] => {
   }, [])
 }
 
-export const getRouteByPathname = (pathname: string = '/404') => {
+export const getRouteByPathname = (pathname: string = '/404'): RouteType => {
   console.log('pathname:', pathname)
   if (pathname === '/') pathname = '/home'
   const routes = flattenRoutes(rootRoutes)

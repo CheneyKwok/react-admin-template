@@ -1,0 +1,25 @@
+.login-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #eee;
+  .login-bg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .login-box {
+    position: absolute;
+    top: -3%;
+    right: -2%;
+    box-sizing: border-box;
+    display: none; // 暂不显示
+    align-items: center;
+    justify-content: space-around;
+    width: 96%;
+    height: 94vh;
+    background-color: hsl(0deg 0% 100% / 80%) !important;
+    border-radius: 10px;
+    transform: translate(-4%, 6%);
+  }
+}

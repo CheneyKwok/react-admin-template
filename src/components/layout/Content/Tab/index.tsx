@@ -1,9 +1,10 @@
+import * as React from 'react'
 import { useEffect, useRef } from 'react'
 import { Tabs } from 'antd'
 import { useLocation } from 'react-router-dom'
 
 import useTabContext from '@/components/hooks/TabContext'
-import { TabType } from '@/types'
+import { RouteMetaType, RouteType, TabType } from '@/types'
 import { getRouteByPathname } from '@/utils/public'
 
 const Tab = () => {
@@ -23,14 +24,15 @@ const Tab = () => {
       setActiveKey(findTab.key)
       return
     }
-    const { path, meta, element } = getRouteByPathname(pathname)
+    const { path, meta, element }: RouteType = getRouteByPathname(pathname)
     // const route = getRouteByPathname(pathname)
+    const { label } = meta as RouteMetaType
     const tab: TabType = {
-      key: path,
-      label: meta.label,
+      key: path as string,
+      label: label,
       children: element,
     }
-    setActiveKey(path)
+    setActiveKey(path as string)
     setTabs([...tabs, tab])
   }, [pathname, setActiveKey, setTabs, tabs])
 
@@ -38,10 +40,13 @@ const Tab = () => {
     setActiveKey(newActiveKey)
   }
 
-  const onEdit = (targetKey: string, action: 'add' | 'remove') => {
-    if (action === 'remove' && typeof targetKey === 'string') {
+  const onEdit = (
+    targetKey: string | React.MouseEvent | React.KeyboardEvent,
+    action: 'add' | 'remove'
+  ) => {
+    if (action === 'remove') {
       console.log('remove tab', targetKey)
-      removeTab(targetKey, () => {})
+      removeTab(targetKey as string, () => {})
     }
   }
 

@@ -29,7 +29,7 @@ export interface TabContextType {
 
 export interface TabType {
   key: string
-  label: ReactNode
+  label: string
   children: ReactNode
   disabled?: boolean
   forceRender?: boolean
