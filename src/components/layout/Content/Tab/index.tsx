@@ -17,22 +17,22 @@ const Tab = () => {
     console.log('pathname', pathname)
     console.log('tabs', tabs)
 
-    const findTab = tabs.find((tab) => tab.key === pathname.split('/')[1])
+    const findTab = tabs.find((tab) => tab.key === pathname)
     console.log('findTab', findTab)
-    if (!!findTab) {
+    if (findTab) {
       setActiveKey(findTab.key)
       return
     }
-    const { path, label, element } = getRouteByPathname(pathname)
+    const { path, meta, element } = getRouteByPathname(pathname)
     // const route = getRouteByPathname(pathname)
     const tab: TabType = {
       key: path,
-      label,
+      label: meta.label,
       children: element,
     }
     setActiveKey(path)
     setTabs([...tabs, tab])
-  }, [pathname])
+  }, [pathname, setActiveKey, setTabs, tabs])
 
   const onChange = (newActiveKey: string) => {
     setActiveKey(newActiveKey)

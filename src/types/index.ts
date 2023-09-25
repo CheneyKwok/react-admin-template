@@ -1,16 +1,21 @@
 import React, { ReactNode } from 'react'
 
 export interface ReactPropsType {
+  // children: React.ReactElement | null
   children: ReactNode
+}
+
+export interface RouteMetaType {
+  key: string
+  label: string
+  auth?: boolean
 }
 
 export interface RouteType {
   path?: string
-  label?: string
-  key?: string
-  auth?: boolean
   index?: boolean
   element: ReactNode
+  meta?: RouteMetaType
   children?: RouteType[]
 }
 

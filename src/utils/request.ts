@@ -2,7 +2,7 @@ import { message } from 'antd'
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 const request = axios.create({
-  baseURL: import.meta.env.VITE_APP_BASE_API,
+  baseURL: import.meta.env.VITE_APP_BASE_API as string,
   timeout: 5000,
 })
 
@@ -17,12 +17,12 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response: AxiosResponse) =>
     // 响应成功增强
-    response.data,
+    response.data as AxiosResponse,
   (error) => {
     // 响应失败增强
     console.log(error)
     let msg = ''
-    const { status } = error.response
+    const { status } = error.response as { status: number }
     switch (status) {
       case 401:
         msg = 'token过期'

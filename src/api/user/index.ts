@@ -1,15 +1,11 @@
+import { ApiUrl } from '@/api'
 import { LoginParams } from '@/api/user/type.ts'
 import request from '@/utils/request.ts'
 
-enum API {
-  LOGIN = '/user/login',
-  USER_INFO = '/user/info',
-}
-
 export const login = (data: LoginParams) => {
-  request.post<any>(API.LOGIN, data)
+  request.post<any>(ApiUrl.LOGIN, data)
 }
 
 export const userInfo = () => {
-  request.get(API.USER_INFO)
+  request.get(ApiUrl.USER_INFO)
 }

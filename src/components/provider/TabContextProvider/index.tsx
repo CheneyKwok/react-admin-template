@@ -2,22 +2,11 @@ import { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { TabContext } from '@/components/hooks/TabContext'
-import Home from '@/pages/home'
 import { ReactPropsType, TabType } from '@/types'
 
-const initTabs: TabType[] = [
-  {
-    key: 'home',
-    label: 'Home',
-    disabled: false,
-    forceRender: false,
-    closeIcon: null, // 在 type="editable-card" 时有效。设置为 null 或 false 时隐藏关闭按钮
-    children: <Home />,
-  },
-]
 const TabContextProvider = ({ children }: ReactPropsType) => {
-  const [tabs, setTabs] = useState([])
-  const [activeKey, setActiveKey] = useState(initTabs[0].key)
+  const [tabs, setTabs] = useState<TabType[]>([])
+  const [activeKey, setActiveKey] = useState('')
   const navigate = useNavigate()
 
   const removeTab = useCallback(
