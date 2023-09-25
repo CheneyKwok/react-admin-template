@@ -14,17 +14,12 @@
     "jsx": "react-jsx",
 
     /* Linting */
-    "strict": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false,
-    "skipLibCheck": true,
+    "strict": true,
 
     "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录
     "paths": {
       //路径映射，相对于baseUrl
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
 
     "types": ["vite-plugin-svg-icons/client"]
