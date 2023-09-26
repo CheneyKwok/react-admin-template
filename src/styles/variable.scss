@@ -1,1 +1,18 @@
-// 全局变量
+// 定义基础屏幕分辨率变量
+$vw-base: 1920;
+$vh-base: 1080;
+
+// 计算视口宽度,vw()中的参数，直接传像素值
+@function vw($px) {
+  @return ($px / $vw-base) * 100vw;
+}
+
+// 计算视口高度, vh()中的参数，直接传像素值
+@function vh($px) {
+  @return ($px / $vh-base) * 100vh;
+}
+
+// 字号
+@function font-size($px) {
+  @return vw($px);
+}

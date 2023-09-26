@@ -1,25 +1,48 @@
 .login-container {
+  position: relative;
   width: 100%;
   height: 100vh;
   background-color: #eee;
   .login-bg {
-    position: relative;
+    position: absolute;
+    z-index: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  .login-box {
+  .login-form {
     position: absolute;
-    top: -3%;
-    right: -2%;
+    top: 50%;
+    left: 50%;
     box-sizing: border-box;
-    display: none; // 暂不显示
+    display: flex; // 暂不显示
+    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    width: 96%;
-    height: 94vh;
+    padding: vh(40) vw(70);
     background-color: hsl(0deg 0% 100% / 80%) !important;
     border-radius: 10px;
-    transform: translate(-4%, 6%);
+    transform: translate(-50%, -50%);
+    .login-logo {
+      padding-bottom: vh(40);
+      font-size: font-size(18);
+      font-weight: bold;
+    }
+    .ant-form {
+      min-width: vw(200);
+      .ant-form-item {
+        width: 100%;
+        .ant-form-item-control-input-content {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+        }
+        .ant-input {
+          min-height: vh(30);
+        }
+      }
+    }
+    .login-form-button {
+      width: 100%;
+    }
   }
 }
