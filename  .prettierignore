@@ -2,5 +2,6 @@
 /html/*
 /node_modules/**
 /public/*
+/.husky/*
 **/*.svg
 **/*.sh
