@@ -1,6 +1,8 @@
 import { message } from 'antd'
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
+import { ApiData, ApiResponseType } from '@/types'
+
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API as string,
   timeout: 5000,
@@ -15,12 +17,18 @@ request.interceptors.request.use(
 
 // 响应拦截器
 request.interceptors.response.use(
-  (response: AxiosResponse) =>
+  (response: AxiosResponse) => {
+    const data = response.data as ApiResponseType
     // 响应成功增强
-    response.data as AxiosResponse,
+    if (data.code && data.code !== 200) {
+      message.error(data.msg)
+      return Promise.reject(data)
+    }
+    return response.data.data as ApiData
+  },
   (error) => {
     // 响应失败增强
-    console.log(error)
+    console.log('error', error)
     let msg = ''
     const { status } = error.response as { status: number }
     switch (status) {
@@ -37,7 +45,7 @@ request.interceptors.response.use(
         msg = '服务器出现问题'
         break
       default:
-        msg = '无网络'
+        msg = '请求失败'
     }
     message.error(msg)
     return Promise.reject(error)

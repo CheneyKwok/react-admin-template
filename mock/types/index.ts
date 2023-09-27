@@ -1,4 +1,4 @@
-export namespace Mock {
+declare namespace Mock {
   export interface RouteMetaType {
     key: string
     label: string
