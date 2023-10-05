@@ -18,7 +18,7 @@
     display: flex; // 暂不显示
     flex-direction: column;
     align-items: center;
-    padding: vh(40) vw(70);
+    padding: vh(40) vw(60);
     background-color: hsl(0deg 0% 100% / 80%) !important;
     border-radius: 10px;
     transform: translate(-50%, -50%);
@@ -28,7 +28,7 @@
       font-weight: bold;
     }
     .ant-form {
-      min-width: vw(200);
+      min-width: vw(250);
       .ant-form-item {
         width: 100%;
         .ant-form-item-control-input-content {

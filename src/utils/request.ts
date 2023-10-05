@@ -1,7 +1,7 @@
 import { message } from 'antd'
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
-import { ApiData, ApiResponseType } from '@/types'
+import { ResponseData } from '@/types'
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API as string,
@@ -17,14 +17,18 @@ request.interceptors.request.use(
 
 // 响应拦截器
 request.interceptors.response.use(
-  (response: AxiosResponse) => {
-    const data = response.data as ApiResponseType
-    // 响应成功增强
-    if (data.code && data.code !== 200) {
-      message.error(data.msg)
-      return Promise.reject(data)
+  (response: AxiosResponse<ResponseData<any>>) => {
+    if (!response.data) {
+      return Promise.resolve(response)
     }
-    return response.data.data as ApiData
+    // 请求成功
+    if (response.data.code === 200) {
+      return response.data as any
+    }
+    // 请求成功，状态不为成功时
+    message.error(response.data.msg)
+
+    return Promise.reject(new Error(response.data.msg))
   },
   (error) => {
     // 响应失败增强

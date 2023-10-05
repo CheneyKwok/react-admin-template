@@ -36,9 +36,8 @@ export interface TabType {
   closeIcon?: ReactNode // 在 type="editable-card" 时有效。设置为 null 或 false 时隐藏关闭按钮
 }
 
-export type ApiData = object | number | string
-export interface ApiResponseType {
+export interface ResponseData<T> {
   code: number
   msg: string
-  data: ApiData
+  data: T
 }
