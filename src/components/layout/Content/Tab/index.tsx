@@ -4,37 +4,51 @@ import { Tabs } from 'antd'
 import { useLocation } from 'react-router-dom'
 
 import useTabContext from '@/components/hooks/TabContext'
-import { RouteMetaType, RouteType, TabType } from '@/types'
-import { getRouteByPathname } from '@/utils/public'
+import useUserStore from '@/store/user.ts'
+
 
 const Tab = () => {
+  const { menus } = useUserStore((state) => state)
   const { tabs, setTabs, activeKey, setActiveKey, removeTab } = useTabContext()
   const pathnameRef = useRef('')
   const { pathname } = useLocation()
+
   useEffect(() => {
-    if (!pathname || pathnameRef.current === pathname) return
-    pathnameRef.current = pathname
+    console.log('render Tab')
+  })
 
-    console.log('pathname', pathname)
-    console.log('tabs', tabs)
-
-    const findTab = tabs.find((tab) => tab.key === pathname)
-    console.log('findTab', findTab)
-    if (findTab) {
-      setActiveKey(findTab.key)
-      return
+  useEffect(() => {
+    const indexMenu = menus.find((menu) => menu.index)
+    const tab = {
+      key: indexMenu.key,
+      label: indexMenu.label,
     }
-    const { path, meta, element }: RouteType = getRouteByPathname(pathname)
-    // const route = getRouteByPathname(pathname)
-    const { label } = meta as RouteMetaType
-    const tab: TabType = {
-      key: path as string,
-      label: label,
-      children: element,
-    }
-    setActiveKey(path as string)
-    setTabs([...tabs, tab])
-  }, [pathname, setActiveKey, setTabs, tabs])
+    setTabs([tab])
+  }, [])
+  // useEffect(() => {
+  //   if (!pathname || pathnameRef.current === pathname) return
+  //   pathnameRef.current = pathname
+  //
+  //   console.log('pathname', pathname)
+  //   console.log('tabs', tabs)
+  //
+  //   const findTab = tabs.find((tab) => tab.key === pathname)
+  //   console.log('findTab', findTab)
+  //   if (findTab) {
+  //     setActiveKey(findTab.key)
+  //     return
+  //   }
+  //   const { path, meta, element }: RouteType = getRouteByPathname(pathname)
+  //   // const route = getRouteByPathname(pathname)
+  //   const { label } = meta as RouteMetaType
+  //   const tab: TabType = {
+  //     key: path as string,
+  //     label: label,
+  //     children: element,
+  //   }
+  //   setActiveKey(path as string)
+  //   setTabs([...tabs, tab])
+  // }, [pathname, setActiveKey, setTabs, tabs])
 
   const onChange = (newActiveKey: string) => {
     setActiveKey(newActiveKey)

@@ -2,15 +2,16 @@ import { MockMethod } from 'vite-plugin-mock'
 
 const createRoutes = () => [
   {
-    element: '@/components/layout',
+    element: '/src/components/layout',
     children: [
       {
         path: '/home',
+        index: true,
         meta: {
           key: '/home',
           label: 'Home',
         },
-        element: '@/pages/home',
+        element: '/src/pages/home',
       },
       {
         path: '/menu',
@@ -18,7 +19,7 @@ const createRoutes = () => [
           key: '/menu',
           label: 'Menu',
         },
-        element: '@/pages/menu',
+        element: '/src/pages/menu',
         children: [
           {
             path: 'submenu',
@@ -26,29 +27,21 @@ const createRoutes = () => [
               key: '/menu/submenu',
               label: 'SubMenu',
             },
-            element: '@/pages/menu/submenu',
+            element: '/src/pages/menu/submenu',
           },
         ],
       },
     ],
   },
-  {
-    path: '/404',
-    element: '@/pages/exception/404',
-  },
-  {
-    path: '/login',
-    element: '@/pages/login',
-  },
 ]
 
 export default [
   {
-    url: '/api/user/menu',
+    url: '/api/auth/routes',
     method: 'get',
     response: () => {
       const routes = createRoutes()
-      return { code: 200, data: { routes } }
+      return { code: 200, data: routes }
     },
   },
 ] as MockMethod[]

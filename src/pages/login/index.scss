@@ -37,12 +37,13 @@
           width: 100%;
         }
         .ant-input {
-          min-height: vh(30);
+          min-height: vh(25);
         }
       }
     }
     .login-form-button {
       width: 100%;
+      min-height: vh(30);
     }
   }
 }

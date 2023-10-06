@@ -1,7 +1,9 @@
 import { lazy } from 'react'
+import { RouteObject } from 'react-router-dom'
 
 import lazyLoad from '@/router/Suspense'
-import { RouteType } from '@/types'
+import { AuthRoute } from '@/types/api'
+
 
 const Layout = lazy(() => import('@/components/layout'))
 const Login = lazy(() => import('@/pages/login'))
@@ -10,45 +12,32 @@ const Home = lazy(() => import('@/pages/home'))
 const Menu = lazy(() => import('@/pages/menu'))
 const SubMenu = lazy(() => import('@/pages/menu/submenu'))
 
-const rootRoutes: RouteType[] = [
+const rootRoutes: RouteObject[] = [
   {
-    path: '/404',
+    path: '/*',
     element: lazyLoad(Exception404),
   },
   {
     path: '/login',
     element: lazyLoad(Login),
   },
-  // {
-  //   element: <Layout />,
-  //   children: [
-  //     {
-  //       path: '/home',
-  //       meta: {
-  //         key: '/home',
-  //         label: 'Home',
-  //       },
-  //       element: <Home />,
-  //     },
-  //     {
-  //       path: '/menu',
-  //       meta: {
-  //         key: '/menu',
-  //         label: 'Menu',
-  //       },
-  //       element: <Menu />,
-  //       children: [
-  //         {
-  //           path: 'submenu',
-  //           meta: {
-  //             key: '/submenu',
-  //             label: 'SubMenu',
-  //           },
-  //           element: <SubMenu />,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
 ]
+
+export const loadRoutes = (routes: AuthRoute[]) => {
+  const loadedRoutes: RouteObject[] = []
+  routes.forEach((route: AuthRoute) => {
+    const { path, element, children } = route
+    const loadedRoute: RouteObject = {
+      element: lazyLoad(lazy(() => import(element))),
+    }
+    if (path) {
+      loadedRoute.path = path
+    }
+    if (children) {
+      loadedRoute.children = loadRoutes(children)
+    }
+    loadedRoutes.push(loadedRoute)
+  })
+  return loadedRoutes
+}
 export default rootRoutes
