@@ -1,45 +1,28 @@
-import { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 
-import { ReactPropsType } from '@/types'
+import useUserStore from '@/store/user.ts'
+import { ReactProps } from '@/types'
+import { searchRoute } from '@/utils/public'
 
-
-const AuthRouter = ({ children }: ReactPropsType) => {
+const AuthRouter = ({ children }: ReactProps) => {
   const { pathname } = useLocation()
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (pathname === '/') navigate('/home')
-  }, [pathname, navigate])
+  const { token, routes } = useUserStore((state) => state)
+  console.log('store routes', routes)
+  const route = searchRoute(pathname, routes)
+  console.log('auth route', route)
+  // 判断当前路由是否需要访问权限
+  if (route && route.meta && !route.meta.auth) {
+    console.log('无需 auth，path', pathname)
+    return children
+  }
+  // 判断是否有Token、用户路由是否为空
+  console.log('auth token', token)
+  if (!token || Object.keys(route).length === 0) {
+    console.log('去登陆, path', pathname)
+    return <Navigate to="/login" replace />
+  }
 
   return children
 }
-// const AuthRouter: FC = () => {
-//   const [routes, setRoutes] = useState(rootRoutes)
-//   const { pathname } = useLocation()
-//   const navigate = useNavigate()
-//
-//   useEffect(() => {
-//     if (pathname === '/') navigate('/home')
-//   }, [pathname, navigate])
-//
-//   useEffect(() => {
-//     getAuthRoutes().then(({ data }: { data: AuthRouteResult }) => {
-//       if (data.routes) {
-//         // 加载路由
-//         data.routes.map((route) => {
-//           route.element
-//         })
-//         const newRoutes = [...routes, ...data.routes]
-//         console.log('newRoutes', newRoutes)
-//         setRoutes(newRoutes)
-//       }
-//     })
-//   }, [])
-//
-//   const element = useRoutes(routes)
-//   console.log('element', element)
-//
-//   return element
-// }
 
 export default AuthRouter

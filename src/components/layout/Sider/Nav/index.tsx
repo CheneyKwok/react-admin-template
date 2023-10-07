@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 
 import useUserStore from '@/store/user.ts'
 
-
 const Nav = () => {
   const { menus } = useUserStore((state) => state)
   const navigate = useNavigate()
@@ -22,6 +21,7 @@ const Nav = () => {
   })
   const onSelect = ({ key }: { key: string }) => {
     console.log('key', key)
+    navigate(key)
   }
   return (
     <>

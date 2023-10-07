@@ -1,6 +1,8 @@
 import { MockMethod } from 'vite-plugin-mock'
 
-const createRoutes = () => [
+import { AuthRoute } from '@/types/api'
+
+const createRoutes = (): AuthRoute[] => [
   {
     element: '/src/components/layout',
     children: [
@@ -10,6 +12,7 @@ const createRoutes = () => [
         meta: {
           key: '/home',
           label: 'Home',
+          auth: true,
         },
         element: '/src/pages/home',
       },
@@ -18,6 +21,7 @@ const createRoutes = () => [
         meta: {
           key: '/menu',
           label: 'Menu',
+          auth: true,
         },
         element: '/src/pages/menu',
         children: [
@@ -26,6 +30,7 @@ const createRoutes = () => [
             meta: {
               key: '/menu/submenu',
               label: 'SubMenu',
+              auth: true,
             },
             element: '/src/pages/menu/submenu',
           },

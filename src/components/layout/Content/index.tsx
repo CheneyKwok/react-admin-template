@@ -1,4 +1,5 @@
 import { Breadcrumb, Layout, theme } from 'antd'
+import { Outlet } from 'react-router-dom'
 
 import Tab from '@/components/layout/Content/Tab'
 
@@ -20,6 +21,7 @@ const Content = () => {
         }}
       >
         <Tab />
+        <Outlet></Outlet>
       </Layout.Content>
     </Layout>
   )

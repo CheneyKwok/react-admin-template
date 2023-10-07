@@ -1,12 +1,6 @@
-import { FlattenT } from '@/utils/public'
+import { Flattenable, RouteMeta } from '@/types'
 
-export interface RouteMeta {
-  key: string
-  label: string
-  auth?: boolean
-}
-
-export interface AuthRoute extends FlattenT {
+export interface AuthRoute extends Flattenable<AuthRoute> {
   path?: string
   index?: boolean
   element: string

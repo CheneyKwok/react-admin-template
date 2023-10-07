@@ -2,9 +2,9 @@ import { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { TabContext } from '@/components/hooks/TabContext'
-import { ReactPropsType, TabType } from '@/types'
+import { ReactProps, TabType } from '@/types'
 
-const TabContextProvider = ({ children }: ReactPropsType) => {
+const TabContextProvider = ({ children }: ReactProps) => {
   const [tabs, setTabs] = useState<TabType[]>([])
   const [activeKey, setActiveKey] = useState('')
   const navigate = useNavigate()
@@ -19,7 +19,6 @@ const TabContextProvider = ({ children }: ReactPropsType) => {
         setActiveKey(nextActiveKey)
       }
       if (newTabs.length == 0) {
-        console.log(11111111111)
         navigate('/')
       }
       setTabs(newTabs)

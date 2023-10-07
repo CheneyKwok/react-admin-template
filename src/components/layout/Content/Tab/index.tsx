@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom'
 import useTabContext from '@/components/hooks/TabContext'
 import useUserStore from '@/store/user.ts'
 
-
 const Tab = () => {
   const { menus } = useUserStore((state) => state)
   const { tabs, setTabs, activeKey, setActiveKey, removeTab } = useTabContext()
@@ -16,15 +15,15 @@ const Tab = () => {
   useEffect(() => {
     console.log('render Tab')
   })
-
-  useEffect(() => {
-    const indexMenu = menus.find((menu) => menu.index)
-    const tab = {
-      key: indexMenu.key,
-      label: indexMenu.label,
-    }
-    setTabs([tab])
-  }, [])
+  //
+  // useEffect(() => {
+  //   const indexMenu = menus.find((menu) => menu.index)
+  //   const tab = {
+  //     key: indexMenu.key,
+  //     label: indexMenu.label,
+  //   }
+  //   setTabs([tab])
+  // }, [])
   // useEffect(() => {
   //   if (!pathname || pathnameRef.current === pathname) return
   //   pathnameRef.current = pathname
