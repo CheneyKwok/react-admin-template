@@ -10,6 +10,7 @@ import { loadRoutes } from '@/router'
 import useUserStore from '@/store/user.ts'
 import { formatMenus } from '@/utils/public'
 
+
 const LoginForm: React.FC = () => {
   const navigate: NavigateFunction = useNavigate()
   const { setToken, addRoutes, setMenus } = useUserStore((state) => state)
@@ -18,11 +19,11 @@ const LoginForm: React.FC = () => {
     async (loginParams: LoginParams) => {
       const { username, password } = loginParams
       const { data: loginRes } = await login({ username, password })
-      console.log('用户 token', loginRes.token)
       setToken(loginRes.token)
       const { data: authRoutes } = await getAuthRoutes()
       if (authRoutes) {
         // 用户路由
+        console.log('用户 routes', loadRoutes(authRoutes))
         addRoutes(loadRoutes(authRoutes))
         // 用户菜单
         setMenus(formatMenus(authRoutes))

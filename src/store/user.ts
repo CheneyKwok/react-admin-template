@@ -1,8 +1,14 @@
 import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 import { create } from 'zustand'
+import { devtools, persist } from 'zustand/middleware'
 
 import rootRoutes from '@/router'
 import { RouteObject } from '@/types'
+
+
+export interface UserState {
+
+}
 
 interface UserStoreTYpe {
   token: string
@@ -13,13 +19,19 @@ interface UserStoreTYpe {
   setMenus: (menus: MenuItemType[]) => void
 }
 
-const useUserStore = create<UserStoreTYpe>((setState) => ({
-  token: localStorage.getItem('token') as string,
-  menus: [],
-  routes: rootRoutes,
-  setToken: (token) => localStorage.setItem('token', token),
-  addRoutes: (routes: RouteObject[]) => setState(() => ({ routes: [...rootRoutes, ...routes] })),
-  setMenus: (menus: MenuItemType[]) => setState(() => ({ menus })),
-}))
-
+const useUserStore = create<UserStoreTYpe>()(
+  devtools(
+    persist(
+      (set) => ({
+        token: '',
+        menus: [],
+        routes: rootRoutes,
+        setToken: (token) => set(() => ({ token })),
+        addRoutes: (routes: RouteObject[]) => set(() => ({ routes: [...rootRoutes, ...routes] })),
+        setMenus: (menus: MenuItemType[]) => set(() => ({ menus })),
+      }),
+      { name: 'userStore'}
+    )
+  )
+)
 export default useUserStore
