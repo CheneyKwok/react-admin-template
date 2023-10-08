@@ -3,34 +3,22 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
 
-import { getAuthRoutes } from '@/api/auth'
 import { login } from '@/api/user'
 import { LoginParams } from '@/api/user/type.ts'
-import { loadRoutes } from '@/router'
-import useUserStore from '@/store/user.ts'
-import { formatMenus } from '@/utils/public'
+import { setToken } from '@/utils/token'
 
 
 const LoginForm: React.FC = () => {
   const navigate: NavigateFunction = useNavigate()
-  const { setToken, addRoutes, setMenus } = useUserStore((state) => state)
 
   const handleSubmit = useCallback(
     async (loginParams: LoginParams) => {
       const { username, password } = loginParams
       const { data: loginRes } = await login({ username, password })
-      setToken(loginRes.token)
-      const { data: authRoutes } = await getAuthRoutes()
-      if (authRoutes) {
-        // 用户路由
-        console.log('用户 routes', loadRoutes(authRoutes))
-        addRoutes(loadRoutes(authRoutes))
-        // 用户菜单
-        setMenus(formatMenus(authRoutes))
-      }
+      setToken(loginRes.token, false)
       navigate('/home')
     },
-    [navigate, addRoutes, setMenus, setToken]
+    [navigate]
   )
 
   return (

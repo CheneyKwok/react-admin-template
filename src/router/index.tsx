@@ -6,12 +6,20 @@ import { AuthRoute } from '@/types/api'
 
 
 const Login = lazy(() => import('@/pages/login'))
-const Exception404 = lazy(() => import('@/pages/exception/404'))
+const Exception403 = lazy(() => import('@/components/exception/Exception403'))
+const Exception404 = lazy(() => import('@/components/exception/Exception404'))
 
 const rootRoutes: RouteObject[] = [
   {
     path: '/login',
     element: lazyLoad(Login),
+    meta: {
+      auth: false,
+    },
+  },
+  {
+    path: '/403',
+    element: lazyLoad(Exception403),
     meta: {
       auth: false,
     },
@@ -28,9 +36,9 @@ const rootRoutes: RouteObject[] = [
 export const loadRoutes = (routes: AuthRoute[]) => {
   const loadedRoutes: RouteObject[] = []
   routes.forEach((route: AuthRoute) => {
-    const { path, index,  element, meta, children } = route
+    const { path, index, element, meta, children } = route
     const loadedRoute: RouteObject = {
-      element: lazyLoad(lazy(() => import(element))),
+      element: lazyLoad(lazy<any>(() => import(element))),
     }
     if (path) loadedRoute.path = path
     if (index) loadedRoute.index = index

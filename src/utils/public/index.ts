@@ -5,6 +5,7 @@ import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 import { Flattenable, RouteObject } from '@/types'
 import { AuthRoute } from '@/types/api'
 
+
 export const flattenRoutes = <T extends Flattenable<T>>(routes: T[]): T[] => {
   return routes.reduce((prev: T[], cur) => {
     prev.push(cur)
@@ -15,13 +16,13 @@ export const flattenRoutes = <T extends Flattenable<T>>(routes: T[]): T[] => {
   }, [])
 }
 
-export const searchRoute = (path: string, routes: RouteObject[] = []): RouteObject => {
-  let route: RouteObject = {}
+export const searchRoute = (path: string, routes: RouteObject[] = []): RouteObject | undefined => {
+  let route = undefined
   for (const item of routes) {
     if (item.path === path) return item
     if (item.children) {
       const res = searchRoute(path, item.children)
-      if (Object.keys(res).length) route = res
+      if (res && Object.keys(res).length) route = res
     }
   }
   return route
