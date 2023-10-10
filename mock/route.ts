@@ -4,7 +4,7 @@ import { AuthRoute } from '@/api/auth/type.ts'
 
 const createRoutes = (): AuthRoute[] => [
   {
-    element: '/src/components/layout',
+    element: '/src/components/layout/index.tsx',
     children: [
       {
         path: '/home',
@@ -14,7 +14,7 @@ const createRoutes = (): AuthRoute[] => [
           label: 'Home',
           auth: true,
         },
-        element: '/src/pages/home',
+        element: '/src/pages/home/index.tsx',
       },
       {
         path: '/menu',
@@ -23,7 +23,7 @@ const createRoutes = (): AuthRoute[] => [
           label: 'Menu',
           auth: true,
         },
-        element: '/src/pages/menu',
+        element: '/src/pages/menu/index.tsx',
         children: [
           {
             path: 'submenu',
@@ -32,7 +32,7 @@ const createRoutes = (): AuthRoute[] => [
               label: 'SubMenu',
               auth: true,
             },
-            element: '/src/pages/menu/submenu',
+            element: '/src/pages/menu/submenu/index.tsx',
           },
         ],
       },

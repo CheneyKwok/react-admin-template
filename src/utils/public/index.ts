@@ -5,6 +5,7 @@ import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 import { AuthRoute } from '@/api/auth/type.ts'
 import lazyLoad from '@/router/Suspense'
 import { RouteObject } from '@/store/user/type.ts'
+import { importFCComponent } from '@/utils/modules'
 import { Flattenable } from '@/utils/public/type.ts'
 
 export const flattenRoutes = <T extends Flattenable<T>>(routes: T[]): T[] => {
@@ -24,6 +25,18 @@ export const searchRoute = (path: string, routes: RouteObject[] = []): RouteObje
     if (item.children) {
       const res = searchRoute(path, item.children)
       if (res && Object.keys(res).length) route = res
+    }
+  }
+  return route
+}
+
+export const searchIndexRoute = (routes: RouteObject[] = []): RouteObject | undefined => {
+  let route = undefined
+  for (const item of routes) {
+    if (item.index) return item
+    if (item.children) {
+      const res = searchIndexRoute(item.children)
+      if (res?.index) route = res
     }
   }
   return route
@@ -55,7 +68,7 @@ export const loadRoutes = (routes: AuthRoute[]) => {
   routes.forEach((route: AuthRoute) => {
     const { path, index, element, meta, children } = route
     const loadedRoute: RouteObject = {
-      element: lazyLoad(lazy<any>(() => import(element))),
+      element: lazyLoad(lazy(importFCComponent(element))),
     }
     if (path) loadedRoute.path = path
     if (index) loadedRoute.index = index
@@ -65,16 +78,3 @@ export const loadRoutes = (routes: AuthRoute[]) => {
   })
   return loadedRoutes
 }
-
-// export const getRouteByPathname = (pathname: string = '/404'): RouteType => {
-//   console.log('pathname:', pathname)
-//   if (pathname === '/') pathname = '/home'
-//   const routes = flattenRoutes(rootRoutes)
-//   console.log('flattenRoutes', routes)
-//   const curRoute = routes.find((route) => route.path === pathname)
-//   console.log('curRoute', curRoute)
-//   if (!curRoute) {
-//     throw new Error('curRoute is null')
-//   }
-//   return curRoute
-// }
