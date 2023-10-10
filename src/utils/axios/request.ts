@@ -1,10 +1,6 @@
 import { message } from 'antd'
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
-
-
-
-
 export interface ResponseObject<T> {
   code: number
   msg: string

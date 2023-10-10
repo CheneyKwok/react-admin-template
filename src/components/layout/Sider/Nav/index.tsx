@@ -1,20 +1,12 @@
 import { useEffect } from 'react'
-import { GlobalOutlined, HomeOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
-import useUserStore from '@/store/user.ts'
+import useUserStore from '@/store/user'
 
 const Nav = () => {
   const { menus } = useUserStore((state) => state)
   const navigate = useNavigate()
-
-  // todo 从后台取菜单数据
-  const menuItems = [
-    { key: '/home', icon: <HomeOutlined />, label: 'Home' },
-    { key: '/menu', icon: <GlobalOutlined />, label: 'Menu' },
-    { key: '/menu/submenu', icon: <GlobalOutlined />, label: 'SubMenu' },
-  ]
 
   useEffect(() => {
     console.log('render Nav')

@@ -4,7 +4,7 @@ import { Tabs } from 'antd'
 import { useLocation } from 'react-router-dom'
 
 import useTabContext from '@/components/hooks/TabContext'
-import useUserStore from '@/store/user.ts'
+import useUserStore from '@/store/user'
 
 const Tab = () => {
   const { menus } = useUserStore((state) => state)

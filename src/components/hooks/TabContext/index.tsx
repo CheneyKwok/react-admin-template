@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 
-import { TabContextType } from '@/types'
+import { TabContextType } from '@/components/hooks/TabContext/type.ts'
 
 const defaultTabContext: TabContextType = {
   tabs: [],

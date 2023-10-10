@@ -1,4 +1,4 @@
-import { AuthRoute } from '@/types/api'
+import { AuthRoute } from '@/api/auth/type.ts'
 import request from '@/utils/axios/request.ts'
 
 export const getAuthRoutes = () => {

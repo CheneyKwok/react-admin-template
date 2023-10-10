@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import * as Icons from '@ant-design/icons'
 import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 
-import { Flattenable, RouteObject } from '@/types'
-import { AuthRoute } from '@/types/api'
-
+import { AuthRoute } from '@/api/auth/type.ts'
+import lazyLoad from '@/router/Suspense'
+import { RouteObject } from '@/store/user/type.ts'
+import { Flattenable } from '@/utils/public/type.ts'
 
 export const flattenRoutes = <T extends Flattenable<T>>(routes: T[]): T[] => {
   return routes.reduce((prev: T[], cur) => {
@@ -47,6 +48,22 @@ export const formatMenus = (authRoutes: AuthRoute[]): MenuItemType[] => {
     }
     return pre
   }, [])
+}
+
+export const loadRoutes = (routes: AuthRoute[]) => {
+  const loadedRoutes: RouteObject[] = []
+  routes.forEach((route: AuthRoute) => {
+    const { path, index, element, meta, children } = route
+    const loadedRoute: RouteObject = {
+      element: lazyLoad(lazy<any>(() => import(element))),
+    }
+    if (path) loadedRoute.path = path
+    if (index) loadedRoute.index = index
+    if (meta) loadedRoute.meta = meta
+    if (children) loadedRoute.children = loadRoutes(children)
+    loadedRoutes.push(loadedRoute)
+  })
+  return loadedRoutes
 }
 
 // export const getRouteByPathname = (pathname: string = '/404'): RouteType => {

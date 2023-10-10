@@ -2,11 +2,10 @@ import { ReactNode } from 'react'
 import { Navigate, RouteObject, useLocation, useRoutes } from 'react-router-dom'
 
 import { getAuthRoutes } from '@/api/auth'
-import rootRoutes, { loadRoutes } from '@/router'
-import useUserStore from '@/store/user.ts'
-import { formatMenus, searchRoute } from '@/utils/public'
+import rootRoutes from '@/router'
+import useUserStore from '@/store/user'
+import { formatMenus, loadRoutes, searchRoute } from '@/utils/public'
 import { getToken } from '@/utils/token'
-
 
 const AuthRouter = (): ReactNode => {
   const { routes, addRoutes, setMenus } = useUserStore((state) => state)

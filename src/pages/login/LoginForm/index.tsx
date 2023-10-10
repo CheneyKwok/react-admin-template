@@ -7,7 +7,6 @@ import { login } from '@/api/user'
 import { LoginParams } from '@/api/user/type.ts'
 import { setToken } from '@/utils/token'
 
-
 const LoginForm: React.FC = () => {
   const navigate: NavigateFunction = useNavigate()
 

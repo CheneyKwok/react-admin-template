@@ -1,9 +1,5 @@
 import Cookies from 'js-cookie'
 
-
-
-
-
 const TokenKey = 'token'
 
 export const getToken = (): string => Cookies.get(TokenKey) || ''

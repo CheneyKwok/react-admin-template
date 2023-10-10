@@ -3,19 +3,9 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
 import rootRoutes from '@/router'
-import { RouteObject } from '@/types'
+import { RouteObject, UserStore } from '@/store/user/type.ts'
 
-
-export interface UserState {}
-
-interface UserStoreTYpe {
-  menus: MenuItemType[]
-  routes: RouteObject[]
-  addRoutes: (routes: RouteObject[]) => void
-  setMenus: (menus: MenuItemType[]) => void
-}
-
-const useUserStore = create<UserStoreTYpe>()(
+const useUserStore = create<UserStore>()(
   devtools((set) => ({
     menus: [],
     routes: rootRoutes,

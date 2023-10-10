@@ -1,9 +1,7 @@
 import { lazy } from 'react'
 
 import lazyLoad from '@/router/Suspense'
-import { RouteObject } from '@/types'
-import { AuthRoute } from '@/types/api'
-
+import { RouteObject } from '@/store/user/type.ts'
 
 const Login = lazy(() => import('@/pages/login'))
 const Exception403 = lazy(() => import('@/components/exception/Exception403'))
@@ -32,21 +30,5 @@ const rootRoutes: RouteObject[] = [
     },
   },
 ]
-
-export const loadRoutes = (routes: AuthRoute[]) => {
-  const loadedRoutes: RouteObject[] = []
-  routes.forEach((route: AuthRoute) => {
-    const { path, index, element, meta, children } = route
-    const loadedRoute: RouteObject = {
-      element: lazyLoad(lazy<any>(() => import(element))),
-    }
-    if (path) loadedRoute.path = path
-    if (index) loadedRoute.index = index
-    if (meta) loadedRoute.meta = meta
-    if (children) loadedRoute.children = loadRoutes(children)
-    loadedRoutes.push(loadedRoute)
-  })
-  return loadedRoutes
-}
 
 export default rootRoutes
