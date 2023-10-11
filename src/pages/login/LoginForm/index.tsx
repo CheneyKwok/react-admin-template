@@ -1,31 +1,25 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import { useRequest } from 'ahooks'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
 
 import { login } from '@/api/user'
-import { LoginParams } from '@/api/user/type.ts'
 import { setToken } from '@/utils/token'
 
 const LoginForm: React.FC = () => {
   const navigate: NavigateFunction = useNavigate()
 
-  const handleSubmit = useCallback(
-    async (loginParams: LoginParams) => {
-      const { username, password } = loginParams
-      const { data: loginRes } = await login({ username, password })
-      setToken(loginRes.token, false)
+  const { run: runLogin } = useRequest(login, {
+    manual: true,
+    onSuccess: ({ data }) => {
+      setToken(data.token, false)
       navigate('/home')
     },
-    [navigate]
-  )
+  })
 
   return (
-    <Form
-      name="loginForm"
-      initialValues={{ remember: false }}
-      onFinish={(loginParams: LoginParams) => handleSubmit(loginParams)}
-    >
+    <Form name="loginForm" initialValues={{ remember: false }} onFinish={runLogin}>
       <Form.Item name="username" rules={[{ required: true, message: '请输入用户名' }]}>
         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
       </Form.Item>

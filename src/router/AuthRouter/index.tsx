@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { useRequest } from 'ahooks'
 import { Navigate, RouteObject, useLocation, useRoutes } from 'react-router-dom'
 
 import { getAuthRoutes } from '@/api/auth'
@@ -12,11 +13,11 @@ const AuthRouter = (): ReactNode => {
   const { routes, addRoutes, setMenus } = useUserStore((state) => state)
   // 路由的组件
   const element = useRoutes(routes as RouteObject[])
-  // 当只有根路由时
-  if (routes === rootRoutes) {
-    // 加载用户权限路由
-    getAuthRoutes().then(({ data: authRoutes }) => {
+  const { run: runLoadAuthRoutes } = useRequest(getAuthRoutes, {
+    manual: true,
+    onSuccess: ({ data: authRoutes }) => {
       if (authRoutes) {
+        console.log('request ....')
         // 用户路由
         addRoutes(loadRoutes(authRoutes))
         // 用户菜单
@@ -24,8 +25,25 @@ const AuthRouter = (): ReactNode => {
       } else {
         return <Navigate to="/403" replace />
       }
-    })
+    },
+  })
+  console.log('>>>>>>>>>routes', routes)
+  // 当只有根路由时，加载用户权限路由
+  if (routes === rootRoutes) {
+    runLoadAuthRoutes()
+    // 加载用户权限路由
+    // getAuthRoutes().then(({ data: authRoutes }) => {
+    //   if (authRoutes) {
+    //     // 用户路由
+    //     addRoutes(loadRoutes(authRoutes))
+    //     // 用户菜单
+    //     setMenus(formatMenus(authRoutes))
+    //   } else {
+    //     return <Navigate to="/403" replace />
+    //   }
+    // })
   }
+
   // '/'的path路由到首页
   if (pathname === '/') {
     const indexRoute = searchIndexRoute(routes)

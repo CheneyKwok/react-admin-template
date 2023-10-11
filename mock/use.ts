@@ -1,5 +1,10 @@
+;
 // 用户信息数据
-import { MockMethod } from 'vite-plugin-mock'
+import { MockMethod } from "vite-plugin-mock";
+
+
+
+
 
 const createUserList = () => [
   {
@@ -51,6 +56,7 @@ export default [
   {
     url: '/api/user/info',
     method: 'get',
+    timeout: 3000,
     response: (request) => {
       // 获取请求头携带token
       const { token } = request.headers
