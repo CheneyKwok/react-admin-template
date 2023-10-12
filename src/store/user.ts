@@ -3,7 +3,6 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
 import rootRoutes from '@/router'
-import { RouteObject, UserStore } from '@/store/user/type.ts'
 
 const useUserStore = create<UserStore>()(
   devtools((set) => ({

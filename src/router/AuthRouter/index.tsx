@@ -4,7 +4,7 @@ import { Navigate, RouteObject, useLocation, useRoutes } from 'react-router-dom'
 
 import { getAuthRoutes } from '@/api/auth'
 import rootRoutes from '@/router'
-import useUserStore from '@/store/user'
+import useUserStore from '@/store/user.ts'
 import { formatMenus, loadRoutes, searchIndexRoute, searchRoute } from '@/utils/public'
 import { getToken } from '@/utils/token'
 

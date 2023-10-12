@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Menu } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
-import useUserStore from '@/store/user'
+import useUserStore from '@/store/user.ts'
 
 const Nav = () => {
   const { menus } = useUserStore((state) => state)

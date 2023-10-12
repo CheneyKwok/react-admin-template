@@ -1,8 +1,7 @@
 import { ReactNode, useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { TabContext } from '@/components/hooks/TabContext'
-import { TabType } from '@/components/hooks/TabContext/type.ts'
+import { TabContext } from '@/components/hooks/useTabContext.tsx'
 
 const TabContextProvider = ({ children }: { children: ReactNode }) => {
   const [tabs, setTabs] = useState<TabType[]>([])

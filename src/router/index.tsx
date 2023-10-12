@@ -1,7 +1,6 @@
 import { lazy } from 'react'
 
 import lazyLoad from '@/router/Suspense'
-import { RouteObject } from '@/store/user/type.ts'
 
 const Login = lazy(() => import('@/pages/login'))
 const Exception403 = lazy(() => import('@/components/exception/Exception403'))

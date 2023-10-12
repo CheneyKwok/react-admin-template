@@ -3,8 +3,8 @@ import { useEffect, useRef } from 'react'
 import { Tabs } from 'antd'
 import { useLocation } from 'react-router-dom'
 
-import useTabContext from '@/components/hooks/TabContext'
-import useUserStore from '@/store/user'
+import useTabContext from '@/components/hooks/useTabContext.tsx'
+import useUserStore from '@/store/user.ts'
 
 const Tab = () => {
   const { menus } = useUserStore((state) => state)

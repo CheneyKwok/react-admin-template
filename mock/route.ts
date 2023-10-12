@@ -1,8 +1,6 @@
 import { MockMethod } from 'vite-plugin-mock'
 
-import { AuthRoute } from '@/api/auth/type.ts'
-
-const createRoutes = (): AuthRoute[] => [
+const createRoutes = (): Api.AuthRoute[] => [
   {
     element: '/src/components/layout/index.tsx',
     children: [

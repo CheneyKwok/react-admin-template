@@ -2,11 +2,10 @@ import React, { lazy } from 'react'
 import * as Icons from '@ant-design/icons'
 import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 
-import { AuthRoute } from '@/api/auth/type.ts'
 import lazyLoad from '@/router/Suspense'
-import { RouteObject } from '@/store/user/type.ts'
 import { importFCComponent } from '@/utils/modules'
-import { Flattenable } from '@/utils/public/type.ts'
+
+import AuthRoute = Api.AuthRoute
 
 export const flattenRoutes = <T extends Flattenable<T>>(routes: T[]): T[] => {
   return routes.reduce((prev: T[], cur) => {
