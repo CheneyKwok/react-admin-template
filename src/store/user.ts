@@ -1,15 +1,11 @@
-import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
 
-import rootRoutes from '@/router'
-
-const useUserStore = create<UserStore>()(
-  devtools((set) => ({
-    menus: [],
-    routes: rootRoutes,
-    addRoutes: (routes: RouteObject[]) => set(() => ({ routes: [...rootRoutes, ...routes] })),
-    setMenus: (menus: MenuItemType[]) => set(() => ({ menus })),
-  }))
-)
+const useUserStore = create<UserStore>((set) => ({
+  loadMenus: true,
+  setLoadMenu: (loadMenus) =>
+    set(() => {
+      console.log('setLoadMenu')
+      return { loadMenus }
+    }),
+}))
 export default useUserStore

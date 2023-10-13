@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 import { Tabs } from 'antd'
 import { useLocation } from 'react-router-dom'
 
-import useTabContext from '@/components/hooks/useTabContext.tsx'
+import useTabContext from '@/hooks/useTabContext.ts'
 import useUserStore from '@/store/user.ts'
 
 const Tab = () => {

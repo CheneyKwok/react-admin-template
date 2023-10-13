@@ -1,6 +1,7 @@
 import React, { lazy } from 'react'
 import * as Icons from '@ant-design/icons'
 import { MenuItemType } from 'antd/es/menu/hooks/useItems'
+import { omitBy } from 'lodash'
 
 import lazyLoad from '@/router/Suspense'
 import { importFCComponent } from '@/utils/modules'
@@ -17,7 +18,8 @@ export const flattenRoutes = <T extends Flattenable<T>>(routes: T[]): T[] => {
   }, [])
 }
 
-export const searchRoute = (path: string, routes: RouteObject[] = []): RouteObject | undefined => {
+export const searchRoute = (path: string, routes: RouteRecord[] = []): RouteRecord | undefined => {
+  console.log('enter searchRoute============================')
   let route = undefined
   for (const item of routes) {
     if (item.path === path) return item
@@ -26,10 +28,13 @@ export const searchRoute = (path: string, routes: RouteObject[] = []): RouteObje
       if (res && Object.keys(res).length) route = res
     }
   }
+  if (!route && path === '/') {
+    route = searchIndexRoute(routes)
+  }
   return route
 }
 
-export const searchIndexRoute = (routes: RouteObject[] = []): RouteObject | undefined => {
+export const searchIndexRoute = (routes: RouteRecord[] = []): RouteRecord | undefined => {
   let route = undefined
   for (const item of routes) {
     if (item.index) return item
@@ -63,10 +68,10 @@ export const formatMenus = (authRoutes: AuthRoute[]): MenuItemType[] => {
 }
 
 export const loadRoutes = (routes: AuthRoute[]) => {
-  const loadedRoutes: RouteObject[] = []
+  const loadedRoutes: RouteRecord[] = []
   routes.forEach((route: AuthRoute) => {
     const { path, index, element, meta, children } = route
-    const loadedRoute: RouteObject = {
+    const loadedRoute: RouteRecord = {
       element: lazyLoad(lazy(importFCComponent(element))),
     }
     if (path) loadedRoute.path = path
@@ -76,4 +81,14 @@ export const loadRoutes = (routes: AuthRoute[]) => {
     loadedRoutes.push(loadedRoute)
   })
   return loadedRoutes
+}
+
+export const filterObject = (obj: object | undefined) => {
+  if (obj) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
+    const filterObj = omitBy(obj, (value) => value === undefined || value == null || value === '')
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return Object.keys(obj).length ? filterObj : null
+  }
+  return null
 }

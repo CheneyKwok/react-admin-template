@@ -14,7 +14,7 @@ const LoginForm: React.FC = () => {
     manual: true,
     onSuccess: ({ data }) => {
       setToken(data.token, false)
-      navigate('/home')
+      navigate('/')
     },
   })
 

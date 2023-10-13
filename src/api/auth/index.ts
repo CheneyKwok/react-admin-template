@@ -1,5 +1,5 @@
 import request from '@/utils/axios/request.ts'
 
-export const getAuthRoutes = () => {
-  return request.get<Api.AuthRoute[]>('/auth/routes')
+export const getMenuRoutes = () => {
+  return request.get<Api.AuthRoute[]>('/auth/menuRoutes')
 }

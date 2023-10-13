@@ -40,7 +40,7 @@ const createRoutes = (): Api.AuthRoute[] => [
 
 export default [
   {
-    url: '/api/auth/routes',
+    url: '/api/auth/menuRoutes',
     method: 'get',
     response: () => {
       const routes = createRoutes()

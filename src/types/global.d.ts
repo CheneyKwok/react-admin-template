@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 
 declare global {
   interface Flattenable<T> {
@@ -7,24 +6,8 @@ declare global {
   }
 
   interface UserStore {
-    menus: MenuItemType[]
-    routes: RouteObject[]
-    addRoutes: (routes: RouteObject[]) => void
-    setMenus: (menus: MenuItemType[]) => void
-  }
-
-  interface RouteObject {
-    path?: string
-    index?: boolean
-    element?: ReactNode
-    meta?: RouteMeta
-    children?: RouteObject[]
-  }
-
-  interface RouteMeta {
-    key?: string
-    label?: string
-    auth?: boolean
+    loadMenus: boolean
+    setLoadMenu: (loadMenus: boolean) => void
   }
 
   export interface TabContextType {
