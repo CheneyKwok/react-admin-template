@@ -10,12 +10,13 @@ declare namespace Api {
     token: string
   }
 
-  interface AuthRoute extends Flattenable<AuthRoute> {
-    path?: string
+  interface MenuRoute extends Flattenable<MenuRoute> {
+    path: string
     index?: boolean
-    element: string
+    redirect?: string
+    component: string
     meta?: RouteMeta
-    children?: AuthRoute[]
+    children?: MenuRoute[]
   }
 
 }
