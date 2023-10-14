@@ -25,6 +25,7 @@ export default [
   {
     url: '/api/auth/menuRoutes',
     method: 'get',
+    timeout: 1000,
     response: () => {
       const routes = createRoutes()
       return { code: 200, data: routes }

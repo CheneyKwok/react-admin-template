@@ -14,7 +14,6 @@ export const flattenRoutes = <T extends Flattenable<T>>(routes: T[]): T[] => {
 }
 
 export const searchRoute = (path: string, routes: RouteRecord[] = []): RouteRecord | undefined => {
-  console.log('enter searchRoute============================')
   let route = undefined
   for (const item of routes) {
     if (item.path === path) return item
@@ -26,6 +25,7 @@ export const searchRoute = (path: string, routes: RouteRecord[] = []): RouteReco
   if (!route && path === '/') {
     route = searchIndexRoute(routes)
   }
+  console.log('searchRoute========================== ', route)
   return route
 }
 

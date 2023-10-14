@@ -38,7 +38,9 @@ const loadMenus = async (
   try {
     await routeStore.loadMenuRoutes()
     userStore.setLoadMenu(false)
-    next({path, replace: true})
+    // next({path, replace: true})
+    console.log('+++++++++++++++++++++++++++++++++++')
+    next()
   } catch (e) {
     notification.error({
       message: '路由菜单加载失败',
@@ -52,8 +54,13 @@ const loadMenus = async (
 }
 
 const beforeEach: RouterGuardBeforeEach = async (path, route, next, userStore, routeStore) => {
+  if (path === '/') {
+    next({ path: '/home', replace: true })
+    return
+  }
   if (getToken()) {
     if (userStore.loadMenus) {
+      console.log('>>>>>>>> loadMenus')
       await loadMenus(path, next, userStore, routeStore)
     } else {
       if (path === '/login' || path === '/') {
@@ -71,11 +78,12 @@ const beforeEach: RouterGuardBeforeEach = async (path, route, next, userStore, r
   }
 }
 const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
-  const { pathname } = useLocation()
+  const location = useLocation()
   const userStore = useUserStore((state) => state)
   const routeStore = useRouteStore((state) => state)
   const router = useRouter()
   const [done, setDone] = useState(false)
+  const { pathname } = location
 
   const route = useMemo(
     () => searchRoute(pathname, routeStore.routes),
@@ -84,6 +92,7 @@ const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
 
   const next: RouterGuardNext = useCallback(
     (options) => {
+      console.log('next, options', options)
       if (options) {
         if (typeof options !== 'string' && options.replace) {
           options.path = wrapperPath(options.path, routeStore.routes)
@@ -92,18 +101,23 @@ const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
         } else {
           router.push(wrapperPath(options as string, routeStore.routes))
         }
+      } else {
+        console.log('set done-----------------')
+        setDone(true)
       }
-      setDone(true)
     },
     [routeStore.routes, router]
   )
 
   useEffect(() => {
-    console.log('mount AuthRouter ==========================')
+    console.log('route beforeEach >==========================')
+    setDone(false)
     beforeEach(pathname, route, next, userStore, routeStore)
-  })
+  }, [pathname])
+  // debugger
+  const res = done ? children : <Loading />
 
-  return done ? children : <Loading />
+  return res
 }
 
 export default RouterGuard

@@ -1,7 +1,6 @@
 import { lazy, ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import RouterGuard from '@/router/RouterGuard'
 import lazyLoad from '@/router/Suspense'
 
 const Login = lazy(() => import('@/pages/login'))
@@ -11,11 +10,8 @@ const Exception403 = lazy(() => import('@/components/exception/Exception403'))
 const Exception404 = lazy(() => import('@/components/exception/Exception404'))
 const Exception500 = lazy(() => import('@/components/exception/Exception500'))
 
+// todo 此时不加载element
 const constantRoutes: RouteRecord[] = [
-  {
-    path: '/',
-    element: <Navigate to='/home' replace/>
-  },
   {
     path: '/',
     element: lazyLoad(BasicLayout),
@@ -27,7 +23,7 @@ const constantRoutes: RouteRecord[] = [
           title: 'Home',
           auth: true,
         },
-        element: <RouterGuard>{lazyLoad(Home)}</RouterGuard>,
+        element: lazyLoad(Home),
       },
     ],
   },
@@ -86,7 +82,7 @@ export const routesRender = (routes: RouteRecord[]): RouteRecord[] => {
     return {
       path: route.path,
       element: Element,
-      children: route.children?.length ? routesRender(route.children): undefined,
+      children: route.children?.length ? routesRender(route.children) : undefined,
     }
   })
 }

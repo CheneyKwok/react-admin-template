@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 
 import { getMenuRoutes } from '@/api/auth'
+import constantRoutes from '@/router'
 import { combineMenuRoutes, formatRoutes } from '@/router/helper.ts'
 
 const useRouteStore = create<RouteStore>((set) => ({
-  routes: [],
+  routes: constantRoutes, //todo 在这里render常量路由
   menuRoutes: [],
   loadMenuRoutes: async () => {
     console.log('loadMenuRoutes>>>>>>>>>>>>>>>>>>>>>>>>')
