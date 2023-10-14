@@ -1,8 +1,8 @@
 import { Layout } from 'antd'
 
-const Header = () => (
+const BasicHeader = () => (
   <Layout.Header style={{ display: 'flex', alignItems: 'center' }}>
     <div className="demo-logo"></div>
   </Layout.Header>
 )
-export default Header
+export default BasicHeader

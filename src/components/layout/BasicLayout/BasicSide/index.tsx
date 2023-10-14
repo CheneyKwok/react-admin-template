@@ -1,14 +1,14 @@
 import { Layout, theme } from 'antd'
 
-import Nav from '@/components/layout/Sider/Nav'
+import BasicMenu from '@/components/layout/BasicLayout/BasicSide/BasicMenu'
 
-const Sider = () => {
+const BasicSide = () => {
   const { token } = theme.useToken()
   return (
     <Layout.Sider width={200} style={{ background: token.colorBgContainer }}>
-      <Nav />
+      <BasicMenu />
     </Layout.Sider>
   )
 }
 
-export default Sider
+export default BasicSide

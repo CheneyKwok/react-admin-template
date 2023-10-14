@@ -1,9 +1,9 @@
 import { Breadcrumb, Layout, theme } from 'antd'
 import { Outlet } from 'react-router-dom'
 
-import Tab from '@/components/layout/Content/Tab'
+import BasicTab from '@/components/layout/BasicLayout/BasicContent/BasicTab'
 
-const Content = () => {
+const BasicContent = () => {
   const { token } = theme.useToken()
   return (
     <Layout style={{ padding: '0 24px 24px' }}>
@@ -20,11 +20,11 @@ const Content = () => {
           background: token.colorBgContainer,
         }}
       >
-        <Tab />
+        <BasicTab />
         <Outlet></Outlet>
       </Layout.Content>
     </Layout>
   )
 }
 
-export default Content
+export default BasicContent
