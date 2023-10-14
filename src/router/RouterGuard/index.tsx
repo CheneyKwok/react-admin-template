@@ -2,7 +2,7 @@ import { PropsWithChildren, ReactNode, useCallback, useEffect, useMemo, useState
 import { notification } from 'antd'
 import { useLocation } from 'react-router-dom'
 
-import Loading from '@/components/loading'
+import Loading from '@/components/Loading.tsx'
 import useRouter from '@/hooks/useRouter.ts'
 import useRouteStore from '@/store/route.ts'
 import useUserStore from '@/store/user.ts'
@@ -29,12 +29,6 @@ const wrapperPath = (path: string, routes: RouteRecord[]) => {
   return path
 }
 
-const notificationLoadFailed = () =>
-  notification.error({
-    message: '路由菜单加载失败',
-    description: '您可以尝试刷新浏览器，或者联系管理员',
-  })
-
 const loadMenus = async (
   path: string,
   next: RouterGuardNext,
@@ -42,23 +36,14 @@ const loadMenus = async (
   routeStore: RouteStore
 ) => {
   try {
-    const isLoad = await routeStore.loadMenuRoutes()
-    if (isLoad) {
-      console.log('isload')
-      userStore.setLoadMenu(false)
-      next({
-        path: path,
-        replace: true,
-      })
-    } else {
-      notificationLoadFailed()
-      next({
-        path: '/500',
-        replace: true,
-      })
-    }
+    await routeStore.loadMenuRoutes()
+    userStore.setLoadMenu(false)
+    next({path, replace: true})
   } catch (e) {
-    notificationLoadFailed()
+    notification.error({
+      message: '路由菜单加载失败',
+      description: '您可以尝试刷新浏览器，或者联系管理员',
+    })
     next({
       path: '/500',
       replace: true,
@@ -85,7 +70,7 @@ const beforeEach: RouterGuardBeforeEach = async (path, route, next, userStore, r
     }
   }
 }
-const AuthRouter = ({ children }: PropsWithChildren): ReactNode => {
+const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
   const { pathname } = useLocation()
   const userStore = useUserStore((state) => state)
   const routeStore = useRouteStore((state) => state)
@@ -112,17 +97,13 @@ const AuthRouter = ({ children }: PropsWithChildren): ReactNode => {
     },
     [routeStore.routes, router]
   )
-  useEffect(() => {
-    console.log('render============================')
-  })
 
   useEffect(() => {
-    console.log('route', route)
     console.log('mount AuthRouter ==========================')
     beforeEach(pathname, route, next, userStore, routeStore)
-  }, [pathname])
+  })
 
   return done ? children : <Loading />
 }
 
-export default AuthRouter
+export default RouterGuard

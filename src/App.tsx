@@ -1,18 +1,17 @@
-import { useEffect } from 'react'
 import { RouteObject, useRoutes } from 'react-router-dom'
 
-import AuthRouter from '@/router/AuthRouter'
+import constantRoutes from '@/router'
+import RouterGuard from '@/router/RouterGuard'
 import useRouteStore from '@/store/route.ts'
 
 const App = () => {
-  const routeStore = useRouteStore((state) => state)
-  const element = useRoutes(routeStore.routes as RouteObject[])
-  useEffect(() => {
-    console.log('mount app=========================')
-  }, [])
+  const { routes } = useRouteStore((state) => state)
+  const element = useRoutes((routes.length ? routes : constantRoutes) as RouteObject[])
+  console.log('routes===========', routes)
+  console.log('find element===========', element)
   return (
     <>
-      <AuthRouter>{element}</AuthRouter>
+      <RouterGuard>{element}</RouterGuard>
     </>
   )
 }

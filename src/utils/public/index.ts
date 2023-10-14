@@ -1,12 +1,7 @@
-import React, { lazy } from 'react'
+import React from 'react'
 import * as Icons from '@ant-design/icons'
 import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 import { omitBy } from 'lodash'
-
-import lazyLoad from '@/router/Suspense'
-import { importFCComponent } from '@/utils/modules'
-
-import AuthRoute = Api.AuthRoute
 
 export const flattenRoutes = <T extends Flattenable<T>>(routes: T[]): T[] => {
   return routes.reduce((prev: T[], cur) => {
@@ -49,13 +44,13 @@ export const searchIndexRoute = (routes: RouteRecord[] = []): RouteRecord | unde
 // 动态渲染 Icon 图标
 const customIcons: { [key: string]: any } = Icons
 
-export const formatMenus = (authRoutes: AuthRoute[]): MenuItemType[] => {
+export const formatMenus = (authRoutes: RouteRecord[]): MenuItemType[] => {
   return authRoutes.reduce((pre: MenuItemType[], cur) => {
-    const { meta, children } = cur
+    const { fullPath, meta, children } = cur
     if (meta) {
       const menu: MenuItemType = {
-        key: meta.key as string,
-        label: meta.label,
+        key: fullPath || '',
+        label: meta.title,
         icon: React.createElement(customIcons['HomeOutlined']),
       }
       pre.push(menu)
@@ -65,22 +60,6 @@ export const formatMenus = (authRoutes: AuthRoute[]): MenuItemType[] => {
     }
     return pre
   }, [])
-}
-
-export const loadRoutes = (routes: AuthRoute[]) => {
-  const loadedRoutes: RouteRecord[] = []
-  routes.forEach((route: AuthRoute) => {
-    const { path, index, element, meta, children } = route
-    const loadedRoute: RouteRecord = {
-      element: lazyLoad(lazy(importFCComponent(element))),
-    }
-    if (path) loadedRoute.path = path
-    if (index) loadedRoute.index = index
-    if (meta) loadedRoute.meta = meta
-    if (children) loadedRoute.children = loadRoutes(children)
-    loadedRoutes.push(loadedRoute)
-  })
-  return loadedRoutes
 }
 
 export const filterObject = (obj: object | undefined) => {

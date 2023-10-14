@@ -1,24 +1,16 @@
 import { create } from 'zustand'
 
 import { getMenuRoutes } from '@/api/auth'
-import rootRoutes from '@/router'
-import { loadRoutes } from '@/utils/public'
+import { combineMenuRoutes, formatRoutes } from '@/router/helper.ts'
 
 const useRouteStore = create<RouteStore>((set) => ({
-  routes: rootRoutes,
+  routes: [],
   menuRoutes: [],
-  // addRoutes: (routes: RouteRecord[]) => set(() => ({ routes: [...rootRoutes, ...routes] })),
-  // setMenus: (menus: MenuItemType[]) => set(() => ({ menus })),
   loadMenuRoutes: async () => {
-    try {
-      const { data } = await getMenuRoutes()
-      const menuRoutes = loadRoutes(data)
-      console.log('loadMenuRoutes')
-      set(() => ({ routes: [...rootRoutes, ...menuRoutes], menuRoutes }))
-      return true
-    } catch (e) {
-      return false
-    }
+    console.log('loadMenuRoutes>>>>>>>>>>>>>>>>>>>>>>>>')
+    const { data } = await getMenuRoutes()
+    const menuRoutes = formatRoutes(data)
+    set(() => ({ routes: combineMenuRoutes(menuRoutes), menuRoutes }))
   },
 }))
 
