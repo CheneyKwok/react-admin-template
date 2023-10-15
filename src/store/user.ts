@@ -7,7 +7,6 @@ const useUserStore = create<UserStore>()(
       loadMenus: true,
       setLoadMenu: (loadMenus) =>
         set(() => {
-          console.log('setLoadMenu')
           return { loadMenus }
         }),
     }),

@@ -48,7 +48,6 @@ const beforeEach: RouterGuardBeforeEach = async (path, route, next, userStore, r
   }
   if (getToken()) {
     if (userStore.loadMenus) {
-      console.log('>>>>>>>> loadMenus')
       await loadMenus(path, next, userStore, routeStore)
     } else {
       if (path === '/login' || path === '/') {
@@ -80,7 +79,6 @@ const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
 
   const next: RouterGuardNext = useCallback(
     (options) => {
-      console.log('next, options', options)
       if (options) {
         if (typeof options !== 'string' && options.replace) {
           // options.path = wrapperPath(options.path, routeStore.routes)
@@ -89,7 +87,6 @@ const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
           router.push(options)
         }
       } else {
-        console.log('set done-----------------')
         setDone(true)
       }
     },
@@ -97,7 +94,6 @@ const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
   )
 
   useEffect(() => {
-    console.log('route beforeEach >==========================')
     setDone(false)
     beforeEach(pathname, route, next, userStore, routeStore)
   }, [pathname])

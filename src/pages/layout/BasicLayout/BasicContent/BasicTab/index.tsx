@@ -1,15 +1,10 @@
 import * as React from 'react'
-import { useEffect } from 'react'
 import { Tabs } from 'antd'
 
 import useTabContext from '@/hooks/useTabContext.ts'
 
 const BasicTab = () => {
   const { tabs, activeKey, setActiveKey, removeTab } = useTabContext()
-
-  useEffect(() => {
-    console.log('render Tab')
-  })
 
   const onChange = (newActiveKey: string) => {
     setActiveKey(newActiveKey)

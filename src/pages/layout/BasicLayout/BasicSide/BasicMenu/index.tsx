@@ -31,11 +31,10 @@ const BasicMenu = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log('render Nav')
-    console.log('menuRoutes', menuRoutes)
+    console.log('menuRoutes', formatMenus(menuRoutes))
   })
   const onSelect = ({ key }: { key: string }) => {
-    console.log('key', key)
+    console.log('menu select', key)
     navigate(key)
   }
   return (

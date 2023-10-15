@@ -16,9 +16,7 @@ const renderRoutesByConfig = (routeConfigs: RouteConfig[]): RouteRecord[] => {
       element = <Navigate to={redirect} replace />
     }
     if (component) {
-      console.log('pageModules', pageModules)
       const key = '/src/' + component + '/index.tsx'
-      console.log('key: ', key)
       const PageComponent = pageModules[key]
       // @ts-ignore
       element = lazyLoad(lazy(PageComponent))

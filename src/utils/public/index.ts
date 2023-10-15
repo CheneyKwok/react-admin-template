@@ -22,7 +22,6 @@ export const searchRoute = (path: string, routes: RouteRecord[] = []): RouteReco
   if (!route && path === '/') {
     route = searchIndexRoute(routes)
   }
-  console.log('searchRoute========================== ', route)
   return route
 }
 
