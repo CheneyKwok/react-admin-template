@@ -6,7 +6,7 @@ import Loading from '@/components/Loading.tsx'
 import useRouter from '@/hooks/useRouter.ts'
 import useRouteStore from '@/store/route.ts'
 import useUserStore from '@/store/user.ts'
-import { searchIndexRoute, searchRoute } from '@/utils/public'
+import { searchRoute } from '@/utils/public'
 import { getToken } from '@/utils/token'
 
 type RouterGuardNext = (options?: (RouterOptions & { replace?: boolean }) | string) => void
@@ -19,16 +19,6 @@ type RouterGuardBeforeEach = (
   routeStore: RouteStore
 ) => void | Promise<void>
 
-const wrapperPath = (path: string, routes: RouteRecord[]) => {
-  console.log('>>>>>>routes', routes)
-  // '/'的path路由到首页
-  if (path === '/') {
-    const indexRoute = searchIndexRoute(routes)
-    if (indexRoute?.path) path = indexRoute.path
-  }
-  return path
-}
-
 const loadMenus = async (
   path: string,
   next: RouterGuardNext,
@@ -38,8 +28,6 @@ const loadMenus = async (
   try {
     await routeStore.loadMenuRoutes()
     userStore.setLoadMenu(false)
-    // next({path, replace: true})
-    console.log('+++++++++++++++++++++++++++++++++++')
     next()
   } catch (e) {
     notification.error({
@@ -95,18 +83,17 @@ const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
       console.log('next, options', options)
       if (options) {
         if (typeof options !== 'string' && options.replace) {
-          options.path = wrapperPath(options.path, routeStore.routes)
-          console.log('wrapperPath', options)
+          // options.path = wrapperPath(options.path, routeStore.routes)
           router.replace(options)
         } else {
-          router.push(wrapperPath(options as string, routeStore.routes))
+          router.push(options)
         }
       } else {
         console.log('set done-----------------')
         setDone(true)
       }
     },
-    [routeStore.routes, router]
+    [router]
   )
 
   useEffect(() => {
@@ -114,10 +101,8 @@ const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
     setDone(false)
     beforeEach(pathname, route, next, userStore, routeStore)
   }, [pathname])
-  // debugger
-  const res = done ? children : <Loading />
 
-  return res
+  return done ? children : <Loading />
 }
 
 export default RouterGuard

@@ -1,90 +1,56 @@
 import { lazy, ReactNode } from 'react'
+import { cloneDeep } from 'lodash'
 import { Navigate } from 'react-router-dom'
 
+import constantRouteConfigs from '@/router/constant.ts'
+import { formatRoutes } from '@/router/helper.ts'
 import lazyLoad from '@/router/Suspense'
 
-const Login = lazy(() => import('@/pages/login'))
-const Home = lazy(() => import('@/pages/home'))
-const BasicLayout = lazy(() => import('@/components/layout/BasicLayout'))
-const Exception403 = lazy(() => import('@/components/exception/Exception403'))
-const Exception404 = lazy(() => import('@/components/exception/Exception404'))
-const Exception500 = lazy(() => import('@/components/exception/Exception500'))
+const pageModules = import.meta.glob(['@/components/**/*.tsx', '@/pages/**/*.tsx'])
 
-// todo 此时不加载element
-const constantRoutes: RouteRecord[] = [
-  {
-    path: '/',
-    element: lazyLoad(BasicLayout),
-    children: [
-      {
-        path: 'home',
-        index: true,
-        meta: {
-          title: 'Home',
-          auth: true,
-        },
-        element: lazyLoad(Home),
-      },
-    ],
-  },
-  {
-    path: '/login',
-    element: lazyLoad(Login),
-    meta: {
-      auth: false,
-    },
-  },
-  {
-    path: '/403',
-    element: lazyLoad(Exception403),
-    meta: {
-      auth: false,
-    },
-  },
-  {
-    path: '/404',
-    element: lazyLoad(Exception404),
-    meta: {
-      auth: false,
-    },
-  },
-  {
-    path: '/500',
-    element: lazyLoad(Exception500),
-    meta: {
-      auth: false,
-    },
-  },
-  {
-    path: '/*',
-    element: lazyLoad(Exception404),
-    meta: {
-      auth: false,
-    },
-  },
-]
-
-const pageModules = import.meta.glob(['@/pages/*/*.tsx'])
-
-export const routesRender = (routes: RouteRecord[]): RouteRecord[] => {
-  return routes.map((route) => {
-    const { redirect, component } = route
-    let Element: ReactNode
+const renderRoutesByConfig = (routeConfigs: RouteConfig[]): RouteRecord[] => {
+  return routeConfigs.map((routeConfig) => {
+    const { path, index, redirect, component, meta } = routeConfig
+    let element: ReactNode
     if (redirect) {
-      Element = <Navigate to={redirect} replace />
+      element = <Navigate to={redirect} replace />
     }
     if (component) {
-      const PageComponent = pageModules[component]
+      console.log('pageModules', pageModules)
+      const key = '/src/' + component + '/index.tsx'
+      console.log('key: ', key)
+      const PageComponent = pageModules[key]
       // @ts-ignore
-      Element = lazyLoad(lazy(PageComponent))
-      // element = lazyLoad(lazy(PageComponent))
+      element = lazyLoad(lazy(PageComponent))
     }
     return {
-      path: route.path,
-      element: Element,
-      children: route.children?.length ? routesRender(route.children) : undefined,
+      path,
+      index,
+      element,
+      meta,
+      children: routeConfig.children?.length
+        ? renderRoutesByConfig(routeConfig.children)
+        : undefined,
     }
   })
 }
 
-export default constantRoutes
+export const createRoutes = (menus: RouteConfig[] = []) => {
+  const _constantRouteConfigs = cloneDeep(constantRouteConfigs)
+  _constantRouteConfigs.forEach((routeConfig) => {
+    if (routeConfig.path === '/' && routeConfig.children) {
+      routeConfig.children = routeConfig.children.concat(menus)
+    }
+  })
+  let routes = renderRoutesByConfig(_constantRouteConfigs)
+  routes = formatRoutes(routes)
+  const menuRoutes = routes.find((route) => (route.path = '/'))?.children || []
+  return {
+    routes,
+    menuRoutes,
+  }
+}
+
+const { routes } = createRoutes()
+
+export default routes

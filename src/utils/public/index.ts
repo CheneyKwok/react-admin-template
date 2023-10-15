@@ -44,8 +44,8 @@ export const searchIndexRoute = (routes: RouteRecord[] = []): RouteRecord | unde
 // 动态渲染 Icon 图标
 const customIcons: { [key: string]: any } = Icons
 
-export const formatMenus = (authRoutes: RouteRecord[]): MenuItemType[] => {
-  return authRoutes.reduce((pre: MenuItemType[], cur) => {
+export const formatMenus = (menuRoutes: RouteRecord[]): MenuItemType[] => {
+  return menuRoutes.reduce((pre: MenuItemType[], cur) => {
     const { fullPath, meta, children } = cur
     if (meta) {
       const menu: MenuItemType = {
@@ -64,9 +64,7 @@ export const formatMenus = (authRoutes: RouteRecord[]): MenuItemType[] => {
 
 export const filterObject = (obj: object | undefined) => {
   if (obj) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
     const filterObj = omitBy(obj, (value) => value === undefined || value == null || value === '')
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return Object.keys(obj).length ? filterObj : null
   }
   return null

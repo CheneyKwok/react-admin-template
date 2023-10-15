@@ -4,14 +4,16 @@ import { Spin } from 'antd'
 const Loading = () => {
   return (
     <Spin
+      tip="Loading"
       size="large"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-      }}
-    />
+      style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}
+    >
+      <div
+        style={{
+          padding: '50px',
+        }}
+      />
+    </Spin>
   )
 }
 export default Loading

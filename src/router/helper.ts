@@ -1,16 +1,6 @@
-import constantRoutes, { routesRender } from '@/router/index.tsx'
 import { validateURL } from '@/utils/public/validate.ts'
 
-export const combineMenuRoutes = (menuRoutes: RouteRecord[]): RouteRecord[] => {
-  const menuRoutesRender = routesRender(menuRoutes)
-  const basicRoute = constantRoutes.find((route) => route.path === '/')
-  if (basicRoute) {
-    basicRoute.children = [...(basicRoute.children || []), ...menuRoutesRender]
-  }
-  return constantRoutes
-}
-
-export const formatRoutes = (routes: Api.MenuRoute[], parentFullPath = ''): RouteRecord[] => {
+export const formatRoutes = (routes: RouteRecord[], parentFullPath = ''): RouteRecord[] => {
   return (
     routes
       // 过滤隐藏的路由

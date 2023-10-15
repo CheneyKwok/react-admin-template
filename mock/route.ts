@@ -1,21 +1,21 @@
 import { MockMethod } from 'vite-plugin-mock'
 
-const createRoutes = (): Api.MenuRoute[] => [
+const createRoutes = (): RouteConfig[] => [
   {
     path: 'menu',
+    component: 'pages/menu',
     meta: {
       title: 'Menu',
       auth: true,
     },
-    component: '/src/pages/menu/index.tsx',
     children: [
       {
         path: 'submenu',
+        component: 'pages/menu/submenu',
         meta: {
           title: 'SubMenu',
           auth: true,
         },
-        component: '/src/pages/menu/submenu/index.tsx',
       },
     ],
   },
