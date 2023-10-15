@@ -1,7 +1,7 @@
 import { Breadcrumb, Layout, theme } from 'antd'
 import { Outlet } from 'react-router-dom'
 
-import BasicTab from '@/components/layout/BasicLayout/BasicContent/BasicTab'
+import BasicTab from '@/pages/layout/BasicLayout/BasicContent/BasicTab'
 
 const BasicContent = () => {
   const { token } = theme.useToken()

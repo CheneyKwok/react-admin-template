@@ -6,7 +6,7 @@ import constantRouteConfigs from '@/router/constant.ts'
 import { formatRoutes } from '@/router/helper.ts'
 import lazyLoad from '@/router/Suspense'
 
-const pageModules = import.meta.glob(['@/components/**/*.tsx', '@/pages/**/*.tsx'])
+const pageModules = import.meta.glob(['@/pages/**/*.tsx'])
 
 const renderRoutesByConfig = (routeConfigs: RouteConfig[]): RouteRecord[] => {
   return routeConfigs.map((routeConfig) => {

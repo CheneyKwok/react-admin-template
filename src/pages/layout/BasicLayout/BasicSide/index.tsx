@@ -1,6 +1,6 @@
 import { Layout, theme } from 'antd'
 
-import BasicMenu from '@/components/layout/BasicLayout/BasicSide/BasicMenu'
+import BasicMenu from '@/pages/layout/BasicLayout/BasicSide/BasicMenu'
 
 const BasicSide = () => {
   const { token } = theme.useToken()

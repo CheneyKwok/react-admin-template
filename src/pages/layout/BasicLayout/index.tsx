@@ -1,9 +1,9 @@
 import { Layout } from 'antd'
 
-import BasicContent from '@/components/layout/BasicLayout/BasicContent'
-import BasicHeader from '@/components/layout/BasicLayout/BasicHeader'
-import BasicSide from '@/components/layout/BasicLayout/BasicSide'
 import TabContextProvider from '@/components/provider/TabContextProvider'
+import BasicContent from '@/pages/layout/BasicLayout/BasicContent'
+import BasicHeader from '@/pages/layout/BasicLayout/BasicHeader'
+import BasicSide from '@/pages/layout/BasicLayout/BasicSide'
 
 const BasicLayout = () => (
   <Layout style={{ width: '100vw', height: '100vh' }}>

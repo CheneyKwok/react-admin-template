@@ -1,7 +1,7 @@
 const constantRouteConfigs: RouteConfig[] = [
   {
     path: '/',
-    component: 'components/layout/BasicLayout',
+    component: 'pages/layout/BasicLayout',
     children: [
       {
         path: 'home',
@@ -23,21 +23,21 @@ const constantRouteConfigs: RouteConfig[] = [
   },
   {
     path: '/403',
-    component: 'components/exception/Exception403',
+    component: 'pages/exception/Exception403',
     meta: {
       auth: false,
     },
   },
   {
     path: '/404',
-    component: 'components/exception/Exception404',
+    component: 'pages/exception/Exception404',
     meta: {
       auth: false,
     },
   },
   {
     path: '/500',
-    component: 'components/exception/Exception500',
+    component: 'pages/exception/Exception500',
     meta: {
       auth: false,
     },

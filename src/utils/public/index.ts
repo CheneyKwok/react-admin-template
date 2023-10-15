@@ -1,6 +1,3 @@
-import React from 'react'
-import * as Icons from '@ant-design/icons'
-import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 import { omitBy } from 'lodash'
 
 export const flattenRoutes = <T extends Flattenable<T>>(routes: T[]): T[] => {
@@ -39,27 +36,6 @@ export const searchIndexRoute = (routes: RouteRecord[] = []): RouteRecord | unde
     }
   }
   return route
-}
-
-// 动态渲染 Icon 图标
-const customIcons: { [key: string]: any } = Icons
-
-export const formatMenus = (menuRoutes: RouteRecord[]): MenuItemType[] => {
-  return menuRoutes.reduce((pre: MenuItemType[], cur) => {
-    const { fullPath, meta, children } = cur
-    if (meta) {
-      const menu: MenuItemType = {
-        key: fullPath || '',
-        label: meta.title,
-        icon: React.createElement(customIcons['HomeOutlined']),
-      }
-      pre.push(menu)
-    }
-    if (children && Array.isArray(children)) {
-      pre = pre.concat(formatMenus(children))
-    }
-    return pre
-  }, [])
 }
 
 export const filterObject = (obj: object | undefined) => {
