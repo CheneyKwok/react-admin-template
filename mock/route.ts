@@ -7,6 +7,7 @@ const createRoutes = (): RouteConfig[] => [
     meta: {
       title: 'Menu',
       auth: true,
+      icon: 'MenuUnfoldOutlined',
     },
     children: [
       {
@@ -15,6 +16,7 @@ const createRoutes = (): RouteConfig[] => [
         meta: {
           title: 'SubMenu',
           auth: true,
+          icon: 'MenuOutlined',
         },
       },
     ],
@@ -25,7 +27,7 @@ export default [
   {
     url: '/api/auth/menuRoutes',
     method: 'get',
-    timeout: 1000,
+    timeout: 500,
     response: () => {
       const routes = createRoutes()
       return { code: 200, data: routes }

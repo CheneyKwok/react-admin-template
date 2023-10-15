@@ -10,6 +10,7 @@ const constantRouteConfigs: RouteConfig[] = [
         meta: {
           title: 'Home',
           auth: true,
+          icon: 'HomeOutlined',
         },
       },
     ],
