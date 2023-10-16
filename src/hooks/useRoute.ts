@@ -1,20 +1,8 @@
 import { useMemo } from 'react'
 import qs from 'qs'
-import { useLocation, useParams } from 'react-router-dom'
+import { matchRoutes, useLocation, useParams } from 'react-router-dom'
 
 import useRouteStore from '@/store/route.ts'
-
-const matchRoute = (path: string, routes: RouteRecord[] = []): RouteRecord | undefined => {
-  let route = undefined
-  for (const item of routes) {
-    if (item.fullPath === path) return item
-    if (item.children) {
-      const res = matchRoute(path, item.children)
-      if (res && Object.keys(res).length) route = res
-    }
-  }
-  return route
-}
 
 const useRoute = (): RouteLocation => {
   const location = useLocation()
@@ -22,6 +10,7 @@ const useRoute = (): RouteLocation => {
   const { routes } = useRouteStore((state) => state)
 
   const search = useMemo(() => location.search, [location.search])
+
   const query = useMemo(
     () => (search ? { ...qs.parse(search.slice(1)) } : {}) as Record<string, object>,
     [search]
@@ -36,10 +25,25 @@ const useRoute = (): RouteLocation => {
     } as Record<string, object>
   }, [location.state, param])
 
-  const matchedRoute = useMemo(
-    () => matchRoute(location.pathname, routes),
-    [location.pathname, routes]
-  )
+  const matchedRoutes = useMemo(() => {
+    const matchedRouteObjs = matchRoutes(routes as any[], location)
+    const matchedPaths = matchedRouteObjs?.map((route) => route.pathname) || []
+    return matchedPaths.reduce((matchedRoutes: RouteRecord[], path) => {
+      if (matchedRoutes.length) {
+        const children = matchedRoutes[matchedRoutes.length - 1].children
+        if (children) {
+          const matchedChildrenRoute = children.find((route) => route.fullPath == path)
+          matchedChildrenRoute && matchedRoutes.push(matchedChildrenRoute)
+        }
+      } else {
+        const matchedRootRoute = routes.find((route) => (route.fullPath = path))
+        matchedRootRoute && matchedRoutes.push(matchedRootRoute)
+      }
+      return matchedRoutes
+    }, [])
+  }, [location, routes])
+
+  const matchedRoute = useMemo(() => matchedRoutes[matchedRoutes.length - 1], [matchedRoutes])
 
   return {
     path: location.pathname,
@@ -48,6 +52,7 @@ const useRoute = (): RouteLocation => {
     query,
     params,
     matchedRoute,
+    matchedRoutes,
   }
 }
 

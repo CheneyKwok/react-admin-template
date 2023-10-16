@@ -49,15 +49,11 @@ const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
           }
         }
       } else {
-        console.log('route>>>>>>', route)
-        if (route && route.meta && !route.meta.auth) {
+        if (route?.meta?.auth === false) {
           next()
-        }else {
+        } else {
           next('/login')
-
         }
-        // log
-
       }
     },
     [needLoadMenus, routes]

@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react'
 
 declare global {
-
   interface RouterOptions {
     path: string
     query?: Record<string, any>
@@ -15,6 +14,7 @@ declare global {
     query: Record<string, object>
     params: Record<string, object>
     matchedRoute: RouteRecord | undefined
+    matchedRoutes: RouteRecord[]
   }
 
   interface TabContextType {
@@ -33,7 +33,6 @@ declare global {
     forceRender?: boolean
     closeIcon?: ReactNode // 在 type="editable-card" 时有效。设置为 null 或 false 时隐藏关闭按钮
   }
-
 }
 
 export {}
