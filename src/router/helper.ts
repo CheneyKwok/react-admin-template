@@ -24,3 +24,15 @@ export const formatRoutes = (routes: RouteRecord[], parentFullPath = ''): RouteR
       })
   )
 }
+
+export const searchIndexRoute = (routes: RouteRecord[] = []): RouteRecord | undefined => {
+    let route = undefined
+    for (const item of routes) {
+        if (item.index) return item
+        if (item.children) {
+            const res = searchIndexRoute(item.children)
+            if (res?.index) route = res
+        }
+    }
+    return route
+}

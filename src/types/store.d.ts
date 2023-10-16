@@ -2,8 +2,8 @@
 declare global {
 
   interface UserStore {
-    loadMenus: boolean
-    setLoadMenu: (loadMenus: boolean) => void
+    needLoadMenus: boolean
+    setNeedLoadMenus: (needLoadMenus: boolean) => void
   }
 
   interface RouteStore {

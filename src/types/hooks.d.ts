@@ -1,13 +1,23 @@
 import React, { ReactNode } from 'react'
 
 declare global {
+
   interface RouterOptions {
     path: string
     query?: Record<string, any>
     params?: Record<string, any>
   }
 
-  export interface TabContextType {
+  interface RouteLocation {
+    path: string
+    fullPath: string
+    hash: string
+    query: Record<string, object>
+    params: Record<string, object>
+    matchedRoute: RouteRecord | undefined
+  }
+
+  interface TabContextType {
     tabs: TabType[]
     activeKey: string
     setTabs: React.Dispatch<React.SetStateAction<TabType[]>>
@@ -15,7 +25,7 @@ declare global {
     removeTab: (targetKey: string, callBackFun: () => void) => void
   }
 
-  export interface TabType {
+  interface TabType {
     key: string
     label: string
     children: ReactNode
@@ -23,6 +33,7 @@ declare global {
     forceRender?: boolean
     closeIcon?: ReactNode // 在 type="editable-card" 时有效。设置为 null 或 false 时隐藏关闭按钮
   }
+
 }
 
 export {}

@@ -1,12 +1,12 @@
-import { PropsWithChildren, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { PropsWithChildren, ReactNode, useCallback, useEffect, useState } from 'react'
 import { notification } from 'antd'
-import { useLocation } from 'react-router-dom'
 
 import Loading from '@/components/Loading.tsx'
+import useRoute from '@/hooks/useRoute.ts'
 import useRouter from '@/hooks/useRouter.ts'
+import { searchIndexRoute } from '@/router/helper.ts'
 import useRouteStore from '@/store/route.ts'
 import useUserStore from '@/store/user.ts'
-import { searchIndexRoute, searchRoute } from '@/utils/public'
 import { getToken } from '@/utils/token'
 
 type RouterGuardNext = (options?: (RouterOptions & { replace?: boolean }) | string) => void
@@ -14,102 +14,90 @@ type RouterGuardNext = (options?: (RouterOptions & { replace?: boolean }) | stri
 type RouterGuardBeforeEach = (
   path: string,
   route: RouteRecord | undefined,
-  next: RouterGuardNext,
-  userStore: UserStore,
-  routeStore: RouteStore
+  next: RouterGuardNext
 ) => void | Promise<void>
 
-const loadMenus = async (
-  path: string,
-  next: RouterGuardNext,
-  userStore: UserStore,
-  routeStore: RouteStore
-) => {
-  try {
-    await routeStore.loadMenuRoutes()
-    userStore.setLoadMenu(false)
-    next()
-  } catch (e) {
-    notification.error({
-      message: '路由菜单加载失败',
-      description: '您可以尝试刷新浏览器，或者联系管理员',
-    })
-    next({
-      path: '/500',
-      replace: true,
-    })
-  }
-}
-
 const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
-  const location = useLocation()
-  const userStore = useUserStore((state) => state)
-  const routeStore = useRouteStore((state) => state)
+  const { needLoadMenus, setNeedLoadMenus } = useUserStore((state) => state)
+  const { routes, loadMenuRoutes } = useRouteStore((state) => state)
   const router = useRouter()
-  const [done, setDone] = useState(false)
-  const { pathname } = location
+  const { path, matchedRoute } = useRoute()
+  const [pending, setPending] = useState(false)
 
-  const route = useMemo(
-    () => searchRoute(pathname, routeStore.routes),
-    [pathname, routeStore.routes]
-  )
-
-  const next: RouterGuardNext = useCallback(
-    (options) => {
-      console.log('next...., options', options)
-      if (options) {
-        if (typeof options !== 'string' && options.replace) {
-          // options.path = wrapperPath(options.path, routeStore.routes)
-          router.replace(options)
-        } else {
-          router.push(options)
-        }
-      } else {
-        setDone(true)
-      }
-    },
-    [router]
-  )
+  useEffect(() => {
+    setPending(false)
+    beforeEach(path, matchedRoute, next)
+  }, [path, routes])
 
   const beforeEach: RouterGuardBeforeEach = useCallback(
-    async (path, route, next, userStore, routeStore) => {
-      if (path === '/') {
-        const indexRoute = searchIndexRoute(routeStore.routes)
-        if (indexRoute?.path) {
-          next({ path: indexRoute.path, replace: true })
-        } else {
-          next()
-        }
-        return
-      }
+    async (path, route, next) => {
       if (getToken()) {
-        if (userStore.loadMenus) {
-          await loadMenus(path, next, userStore, routeStore)
+        if (needLoadMenus) {
+          await loadMenus(path, next)
         } else {
           if (path === '/login') {
             next('/')
+          } else if (path === '/') {
+            const indexRoute = searchIndexRoute(routes)
+            if (indexRoute?.path) {
+              next({ path: indexRoute.path, replace: true })
+            } else {
+              next()
+            }
           } else {
             next()
           }
         }
       } else {
-        if (!route || route.meta?.auth) {
-          next('/login')
-        } else {
+        console.log('route>>>>>>', route)
+        if (route && route.meta && !route.meta.auth) {
           next()
+        }else {
+          next('/login')
+
         }
+        // log
+
       }
     },
-    []
+    [needLoadMenus, routes]
   )
 
-  useEffect(() => {
-    console.log('route beforeEach------------------')
-    setDone(false)
-    beforeEach(pathname, route, next, userStore, routeStore)
-  }, [pathname])
+  const next: RouterGuardNext = useCallback(
+    (options) => {
+      if (options) {
+        if (typeof options !== 'string' && options.replace) {
+          router.replace(options)
+        } else {
+          router.push(options)
+        }
+      } else {
+        setPending(true)
+      }
+    },
+    [router]
+  )
 
-  return done ? children : <Loading />
+  const loadMenus = useCallback(
+    async (path: string, next: RouterGuardNext) => {
+      try {
+        setNeedLoadMenus(false)
+        await loadMenuRoutes()
+      } catch (e) {
+        notification.error({
+          message: '路由菜单加载失败',
+          description: '您可以尝试刷新浏览器，或者联系管理员',
+        })
+        next({
+          path: '/500',
+          replace: true,
+        })
+      }
+    },
+    [loadMenuRoutes, setNeedLoadMenus]
+  )
+
+  return pending ? children : <Loading />
 }
 
 export default RouterGuard

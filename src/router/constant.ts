@@ -24,21 +24,21 @@ const constantRouteConfigs: RouteConfig[] = [
   },
   {
     path: '/403',
-    component: 'pages/exception/Exception403',
+    component: 'pages/exception/403',
     meta: {
       auth: false,
     },
   },
   {
     path: '/404',
-    component: 'pages/exception/Exception404',
+    component: 'pages/exception/404',
     meta: {
       auth: false,
     },
   },
   {
     path: '/500',
-    component: 'pages/exception/Exception500',
+    component: 'pages/exception/500',
     meta: {
       auth: false,
     },

@@ -4,10 +4,10 @@ import { devtools } from 'zustand/middleware'
 const useUserStore = create<UserStore>()(
   devtools(
     (set) => ({
-      loadMenus: true,
-      setLoadMenu: (loadMenus) =>
+      needLoadMenus: true,
+        setNeedLoadMenus: (needLoadMenus) =>
         set(() => {
-          return { loadMenus }
+          return { needLoadMenus }
         }),
     }),
     { name: 'UserStore' }
