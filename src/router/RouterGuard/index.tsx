@@ -22,7 +22,6 @@ const RouterGuard = ({ children }: PropsWithChildren): ReactNode => {
   const router = useRouter()
   const { path, matchedRoute } = useRoute()
   const [pending, setPending] = useState(false)
-  console.log('routes', routes)
 
   useEffect(() => {
     setPending(false)
