@@ -14,6 +14,7 @@ declare global {
     path: string
     fullPath?: string
     index?: boolean
+    redirect?: string
     element?: ReactNode
     meta?: RouteMeta
     children?: RouteRecord[]
@@ -23,6 +24,7 @@ declare global {
     auth?: boolean
     hidden?: boolean
     title?: string
+    notPage?: boolean
     icon?: string
   }
 }

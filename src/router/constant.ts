@@ -2,13 +2,13 @@ const constantRouteConfigs: RouteConfig[] = [
   {
     path: '/',
     component: 'pages/layout/BasicLayout',
+    redirect: '/home',
     children: [
       {
         path: 'home',
-        index: true,
         component: 'pages/home',
         meta: {
-          title: 'Home',
+          title: '首页',
           auth: true,
           icon: 'HomeOutlined',
         },

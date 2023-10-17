@@ -1,6 +1,6 @@
 import { lazy, ReactNode } from 'react'
 import { cloneDeep } from 'lodash'
-import { Navigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 import constantRouteConfigs from '@/router/constant.ts'
 import { formatRoutes } from '@/router/helper.ts'
@@ -12,18 +12,18 @@ const renderRoutesByConfig = (routeConfigs: RouteConfig[]): RouteRecord[] => {
   return routeConfigs.map((routeConfig) => {
     const { path, index, redirect, component, meta } = routeConfig
     let element: ReactNode
-    if (redirect) {
-      element = <Navigate to={redirect} replace />
-    }
     if (component) {
       const key = '/src/' + component + '/index.tsx'
       const PageComponent = pageModules[key]
       // @ts-ignore
       element = lazyLoad(lazy(PageComponent))
+    } else {
+      element = <Outlet />
     }
     return {
       path,
       index,
+      redirect,
       element,
       meta,
       children: routeConfig.children?.length
@@ -42,7 +42,7 @@ export const createRoutes = (menus: RouteConfig[] = []) => {
   })
   let routes = renderRoutesByConfig(_constantRouteConfigs)
   routes = formatRoutes(routes)
-  const menuRoutes = routes.find((route) => (route.path = '/'))?.children || []
+  const menuRoutes = routes.find((route) => route.path === '/')?.children || []
   return {
     routes,
     menuRoutes,

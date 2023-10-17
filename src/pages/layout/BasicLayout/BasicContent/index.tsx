@@ -17,7 +17,6 @@ const BasicContent = () => {
     }))
   }, [matchedRoutes])
 
-  console.log('items', items)
   return (
     <Layout style={{ padding: '0 24px 24px' }}>
       <Breadcrumb style={{ margin: '16px 0' }} items={items} />
@@ -30,7 +29,7 @@ const BasicContent = () => {
         }}
       >
         <BasicTab />
-        <Outlet></Outlet>
+        <Outlet/>
       </Layout.Content>
     </Layout>
   )
