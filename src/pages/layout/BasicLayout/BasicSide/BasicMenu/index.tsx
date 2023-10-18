@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import * as Icons from '@ant-design/icons'
 import { Menu } from 'antd'
 import { ItemType } from 'antd/es/menu/hooks/useItems'
-import { useLocation, useNavigate } from 'react-router-dom'
 
+import useRoute from '@/hooks/useRoute.ts'
+import useRouter from '@/hooks/useRouter.ts'
 import useRouteStore from '@/store/route.ts'
 
 // 动态渲染 Icon 图标
@@ -17,7 +18,7 @@ const formatMenus = (menuRoutes: RouteRecord[]): ItemType[] => {
       return {
         key: fullPath,
         label: meta?.title,
-        icon: React.createElement(customIcons[meta?.icon || '']),
+        icon: meta?.icon ? React.createElement(customIcons[meta?.icon]) : undefined,
         children: menuRoute.children ? formatMenus(menuRoute.children) : undefined,
       } as ItemType
     })
@@ -25,22 +26,13 @@ const formatMenus = (menuRoutes: RouteRecord[]): ItemType[] => {
 
 const BasicMenu = () => {
   const { menuRoutes } = useRouteStore((state) => state)
-  const { pathname } = useLocation()
-  const navigate = useNavigate()
+  const { path } = useRoute()
+  const router = useRouter()
   const [selectKeys, setSelectKeys] = useState<string[]>()
 
   useEffect(() => {
-    console.log('menuRoutes', formatMenus(menuRoutes))
-  }, [])
-
-  useEffect(() => {
-    setSelectKeys([pathname])
-  }, [pathname])
-
-  const onSelect = ({ key }: { key: string }) => {
-    console.log('menu select', key)
-    navigate(key)
-  }
+    setSelectKeys([path])
+  }, [path])
 
   return (
     <>
@@ -50,7 +42,7 @@ const BasicMenu = () => {
         selectedKeys={selectKeys}
         style={{ height: '100%', borderRight: 0 }}
         items={formatMenus(menuRoutes)}
-        onSelect={onSelect}
+        onClick={({ key }) => router.push(key)}
       />
     </>
   )

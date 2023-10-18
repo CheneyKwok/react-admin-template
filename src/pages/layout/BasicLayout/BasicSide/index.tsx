@@ -5,7 +5,7 @@ import BasicMenu from '@/pages/layout/BasicLayout/BasicSide/BasicMenu'
 const BasicSide = () => {
   const { token } = theme.useToken()
   return (
-    <Layout.Sider width={200} style={{ background: token.colorBgContainer }}>
+    <Layout.Sider width={220} style={{ background: token.colorBgContainer }}>
       <BasicMenu />
     </Layout.Sider>
   )

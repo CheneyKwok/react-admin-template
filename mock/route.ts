@@ -7,8 +7,8 @@ const createRoutes = (): RouteConfig[] => [
     meta: {
       title: '用户信息',
       auth: true,
-      icon: 'UserOutlined'
-    }
+      icon: 'UserOutlined',
+    },
   },
   {
     path: 'menu',
@@ -21,12 +21,10 @@ const createRoutes = (): RouteConfig[] => [
     children: [
       {
         path: 'menu1',
-        // component: 'pages/menu/menu1',
         meta: {
           title: '一级菜单1',
           auth: true,
           notPage: true,
-          icon: 'MenuOutlined',
         },
         children: [
           {
@@ -35,7 +33,6 @@ const createRoutes = (): RouteConfig[] => [
             meta: {
               title: '二级菜单1-1',
               auth: true,
-              icon: 'MenuOutlined',
             },
           },
           {
@@ -44,10 +41,9 @@ const createRoutes = (): RouteConfig[] => [
             meta: {
               title: '二级菜单1-2',
               auth: true,
-              icon: 'MenuOutlined',
             },
           },
-        ]
+        ],
       },
       {
         path: 'menu2',
@@ -55,7 +51,6 @@ const createRoutes = (): RouteConfig[] => [
         meta: {
           title: '一级菜单2',
           auth: true,
-          icon: 'MenuOutlined',
         },
       },
     ],

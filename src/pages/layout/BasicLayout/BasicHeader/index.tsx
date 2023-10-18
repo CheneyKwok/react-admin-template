@@ -1,8 +1,18 @@
 import { Layout } from 'antd'
 
-const BasicHeader = () => (
-  <Layout.Header style={{ display: 'flex', alignItems: 'center' }}>
-    <div className="demo-logo"></div>
-  </Layout.Header>
-)
+import './index.scss'
+
+const BasicHeader = () => {
+  return (
+    <Layout.Header
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        background: '#fff',
+      }}
+    >
+      <div className="logo">React Admin Template</div>
+    </Layout.Header>
+  )
+}
 export default BasicHeader
