@@ -5,6 +5,7 @@ import { ItemType } from 'antd/es/menu/hooks/useItems'
 
 import useRoute from '@/hooks/useRoute.ts'
 import useRouter from '@/hooks/useRouter.ts'
+import useTabContext from '@/hooks/useTabContext.ts'
 import useRouteStore from '@/store/route.ts'
 
 // 动态渲染 Icon 图标
@@ -26,12 +27,22 @@ const formatMenus = (menuRoutes: RouteRecord[]): ItemType[] => {
 
 const BasicMenu = () => {
   const { menuRoutes } = useRouteStore((state) => state)
-  const { path } = useRoute()
+  const { path, matchedRoute } = useRoute()
   const router = useRouter()
   const [selectKeys, setSelectKeys] = useState<string[]>()
-
+  const { addTab, setActiveKey } = useTabContext()
   useEffect(() => {
     setSelectKeys([path])
+    //Tab
+    setActiveKey(path)
+    if (matchedRoute) {
+      console.log('matchedRoute', matchedRoute)
+      const tab: TabType = {
+        key: matchedRoute.fullPath || '',
+        label: matchedRoute.meta?.title || '',
+      }
+      addTab(tab)
+    }
   }, [path])
 
   return (

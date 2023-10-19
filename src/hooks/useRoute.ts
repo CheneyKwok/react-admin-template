@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
+import { cloneDeep } from 'lodash'
 import qs from 'qs'
 import { matchRoutes, useLocation, useParams } from 'react-router-dom'
 
 import useRouteStore from '@/store/route.ts'
-import {cloneDeep} from "lodash";
 
 const useRoute = (): RouteLocation => {
   const location = useLocation()
@@ -33,11 +33,13 @@ const useRoute = (): RouteLocation => {
       if (matchedRoutes.length) {
         const children = matchedRoutes[matchedRoutes.length - 1].children
         if (children) {
-          const matchedChildrenRoute = children.find((route) => route.fullPath === path || route.fullPath + '/' === path)
+          const matchedChildrenRoute = children.find(
+            (route) => route.fullPath === path || route.fullPath + '/' === path
+          )
           matchedChildrenRoute && matchedRoutes.push(cloneDeep(matchedChildrenRoute))
         }
       } else {
-        const matchedRootRoute = routes.find((route) => (route.fullPath === path))
+        const matchedRootRoute = routes.find((route) => route.fullPath === path)
         matchedRootRoute && matchedRoutes.push(matchedRootRoute)
       }
       return matchedRoutes

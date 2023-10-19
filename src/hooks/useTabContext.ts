@@ -4,7 +4,7 @@ const defaultTabContext: TabContextType = {
   tabs: [],
   activeKey: '',
   setActiveKey: () => {},
-  setTabs: () => {},
+  addTab: () => {},
   removeTab: () => {},
 }
 

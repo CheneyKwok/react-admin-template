@@ -2,12 +2,15 @@ import * as React from 'react'
 import { Tabs } from 'antd'
 
 import useTabContext from '@/hooks/useTabContext.ts'
+import useRouter from "@/hooks/useRouter.ts";
 
 const BasicTab = () => {
   const { tabs, activeKey, setActiveKey, removeTab } = useTabContext()
+  const router = useRouter()
 
-  const onChange = (newActiveKey: string) => {
-    setActiveKey(newActiveKey)
+  const onChange = (key: string) => {
+    setActiveKey(key)
+    router.push(key)
   }
 
   const onEdit = (
@@ -22,6 +25,7 @@ const BasicTab = () => {
 
   return (
     <Tabs
+        hideAdd
       type="editable-card"
       onChange={onChange}
       activeKey={activeKey}

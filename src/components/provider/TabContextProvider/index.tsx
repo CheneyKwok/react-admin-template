@@ -8,6 +8,16 @@ const TabContextProvider = ({ children }: { children: ReactNode }) => {
   const [activeKey, setActiveKey] = useState('')
   const navigate = useNavigate()
 
+  const addTab = useCallback(
+    (tab: TabType) => {
+      if (tab) {
+        const isSome = tabs.some((sourceTab) => sourceTab.key === tab.key)
+        if (!isSome) setTabs([...tabs, tab])
+      }
+    },
+    [tabs]
+  )
+
   const removeTab = useCallback(
     (targetKey: string, callBackFun = () => {}) => {
       const newTabs = tabs.filter((tab) => tab.key !== targetKey)
@@ -25,15 +35,15 @@ const TabContextProvider = ({ children }: { children: ReactNode }) => {
     },
     [tabs, activeKey, navigate]
   )
-  const providerValue = useMemo(
+  const providerValue: TabContextType = useMemo(
     () => ({
       tabs,
       activeKey,
-      setTabs,
+      addTab,
       setActiveKey,
       removeTab,
     }),
-    [tabs, activeKey, setTabs, setActiveKey, removeTab]
+    [tabs, activeKey, addTab, removeTab]
   )
   return <TabContext.Provider value={providerValue}>{children}</TabContext.Provider>
 }
