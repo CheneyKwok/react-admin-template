@@ -18,18 +18,21 @@ const BasicContent = () => {
   }, [matchedRoutes])
 
   return (
-    <Layout style={{ padding: '0 24px 24px' }}>
-      <Breadcrumb style={{ margin: '16px 0' }} items={items} />
+    <Layout style={{ padding: '0 0 24px', backgroundColor: '#fff', margin: 24 }}>
+      <div>
+        <Breadcrumb style={{ margin: '16px 0' }} items={items} />
+        <BasicTab />
+      </div>
       <Layout.Content
         style={{
           padding: 24,
           margin: 0,
           minHeight: 280,
-          background: token.colorBgContainer,
+          // background: token.colorBgContainer,
+          backgroundColor: '#f0f2f5',
         }}
       >
-        <BasicTab />
-        <Outlet/>
+        <Outlet />
       </Layout.Content>
     </Layout>
   )
